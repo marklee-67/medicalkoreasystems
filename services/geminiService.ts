@@ -25,7 +25,7 @@ export class GeminiService {
       return response.text || "죄송합니다. 요청을 처리할 수 없습니다.";
     } catch (error) {
       console.error("Gemini Error:", error);
-      return "안녕하세요! 현재 시스템 점검 중입니다. 급한 문의는 help@mkhub.com으로 이메일 주시기 바랍니다.";
+      return "안녕하세요! 현재 시스템 점검 중입니다. 급한 문의는 info@medicalohub.com으로 이메일 주시기 바랍니다.";
     }
   }
 }

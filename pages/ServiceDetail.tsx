@@ -1,11 +1,17 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { SERVICES } from '../constants';
+import { getServices } from '../constants';
+import { Service } from '../types';
 
 const ServiceDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const service = SERVICES.find(s => s.id === id);
+  const [service, setService] = useState<Service | undefined>(undefined);
+
+  useEffect(() => {
+    const services = getServices();
+    setService(services.find(s => s.id === id));
+  }, [id]);
 
   if (!service) {
     return (
@@ -49,7 +55,7 @@ const ServiceDetail: React.FC = () => {
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">최고 수준의 헬스케어, <br/><span className="text-primary">당신만을 위한 맞춤 서비스</span></h2>
             <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mb-8">{service.longDescription}</p>
             <div className="grid grid-cols-2 gap-6">
-              {service.features.map((feature, i) => (
+              {service.features?.map((feature, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <div className="size-6 bg-primary/10 text-primary rounded-full flex items-center justify-center">
                     <span className="material-symbols-outlined text-[16px] font-bold">check</span>
@@ -60,7 +66,7 @@ const ServiceDetail: React.FC = () => {
             </div>
           </div>
           <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-video">
-             <img src={`https://picsum.photos/seed/${service.id}-2/800/600`} alt="기능 설명" className="w-full h-full object-cover" />
+             <img src={service.imageUrl || `https://picsum.photos/seed/${service.id}-2/800/600`} alt="기능 설명" className="w-full h-full object-cover" />
              <div className="absolute top-4 right-4 bg-white/90 dark:bg-surface-dark/90 px-4 py-2 rounded-xl text-xs font-bold border border-slate-100 dark:border-slate-800">
                 인증된 AI 분석 시스템
              </div>

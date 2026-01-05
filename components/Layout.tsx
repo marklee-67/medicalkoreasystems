@@ -65,51 +65,61 @@ const Navbar: React.FC = () => {
   );
 };
 
-const Footer: React.FC = () => (
-  <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-12">
-    <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
-      <div className="col-span-1 md:col-span-2">
-        <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white">
-          <span className="material-symbols-outlined text-primary text-2xl">medical_services</span>
-          <span className="text-lg font-bold">Medical Korea Systems</span>
+const Footer: React.FC = () => {
+  const [dynamicServices, setDynamicServices] = useState([]);
+
+  useEffect(() => {
+    const updateServices = () => {
+      import('../constants').then(m => setDynamicServices(m.getServices()));
+    };
+    updateServices();
+    window.addEventListener('storage_updated', updateServices);
+    return () => window.removeEventListener('storage_updated', updateServices);
+  }, []);
+
+  return (
+    <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-12">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="col-span-1 md:col-span-2">
+          <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white">
+            <span className="material-symbols-outlined text-primary text-2xl">medical_services</span>
+            <span className="text-lg font-bold">Medical Korea Systems</span>
+          </div>
+          <p className="text-slate-500 dark:text-slate-400 max-w-sm mb-6">
+            AI 기반 건강 관리와 글로벌 의료 컨시어지 서비스를 통해 더 건강하고 스마트한 미래를 선도합니다.
+          </p>
+          <div className="flex gap-4">
+            <a href="#" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">public</span></a>
+            <a href="#" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">alternate_email</span></a>
+            <a href="#" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">chat</span></a>
+          </div>
         </div>
-        <p className="text-slate-500 dark:text-slate-400 max-w-sm mb-6">
-          AI 기반 건강 관리와 글로벌 의료 컨시어지 서비스를 통해 더 건강하고 스마트한 미래를 선도합니다.
-        </p>
-        <div className="flex gap-4">
-          <a href="#" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">public</span></a>
-          <a href="#" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">alternate_email</span></a>
-          <a href="#" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">chat</span></a>
+        <div>
+          <h4 className="font-bold text-slate-900 dark:text-white mb-6">회사 소개</h4>
+          <ul className="flex flex-col gap-3 text-slate-500 dark:text-slate-400 text-sm">
+            <li><Link to="/about" className="hover:text-primary">회사 개요</Link></li>
+            <li><Link to="/admin/login" className="hover:text-primary flex items-center gap-1">관리자</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-bold text-slate-900 dark:text-white mb-6">솔루션</h4>
+          <ul className="flex flex-col gap-3 text-slate-500 dark:text-slate-400 text-sm">
+            {dynamicServices.map(s => (
+              <li key={s.id}><Link to={`/service/${s.id}`} className="hover:text-primary">{s.name}</Link></li>
+            ))}
+          </ul>
         </div>
       </div>
-      <div>
-        <h4 className="font-bold text-slate-900 dark:text-white mb-6">회사 소개</h4>
-        <ul className="flex flex-col gap-3 text-slate-500 dark:text-slate-400 text-sm">
-          <li><Link to="/about" className="hover:text-primary">회사 개요</Link></li>
-          <li><a href="#" className="hover:text-primary">인재 채용</a></li>
-          <li><Link to="/partnership" className="hover:text-primary">파트너 현황</Link></li>
-          <li><a href="#" className="hover:text-primary">보도 자료</a></li>
-        </ul>
+      <div className="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <p>© 2024 Medical Korea Systems. All rights reserved.</p>
+        <div className="flex gap-6 items-center">
+          <a href="#" className="hover:text-primary">개인정보처리방침</a>
+          <a href="#" className="hover:text-primary">이용약관</a>
+        </div>
       </div>
-      <div>
-        <h4 className="font-bold text-slate-900 dark:text-white mb-6">솔루션</h4>
-        <ul className="flex flex-col gap-3 text-slate-500 dark:text-slate-400 text-sm">
-          <li><Link to="/service/q-health" className="hover:text-primary">Q-health</Link></li>
-          <li><Link to="/service/nutricheck" className="hover:text-primary">NutriCheck</Link></li>
-          <li><Link to="/service/hellios" className="hover:text-primary">HELLIOS</Link></li>
-          <li><Link to="/service/medi-bar" className="hover:text-primary">Medi-Bar</Link></li>
-        </ul>
-      </div>
-    </div>
-    <div className="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-      <p>© 2024 Medical Korea Systems. All rights reserved.</p>
-      <div className="flex gap-6">
-        <a href="#" className="hover:text-primary">개인정보처리방침</a>
-        <a href="#" className="hover:text-primary">이용약관</a>
-      </div>
-    </div>
-  </footer>
-);
+    </footer>
+  );
+};
 
 const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

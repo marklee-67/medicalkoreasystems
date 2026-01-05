@@ -1,9 +1,19 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { SERVICES } from '../constants';
+import { getServices } from '../constants';
+import { Service } from '../types';
 
 const Solutions: React.FC = () => {
+  const [services, setServices] = useState<Service[]>([]);
+
+  useEffect(() => {
+    const update = () => setServices(getServices());
+    update();
+    window.addEventListener('storage_updated', update);
+    return () => window.removeEventListener('storage_updated', update);
+  }, []);
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -27,7 +37,7 @@ const Solutions: React.FC = () => {
       {/* Solutions Grid */}
       <section className="py-20 px-6 max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {SERVICES.map((service) => (
+          {services.map((service) => (
             <div key={service.id} className="group bg-white dark:bg-surface-dark rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-xl transition-all">
               <div className="h-48 overflow-hidden">
                 <img src={service.imageUrl} alt={service.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
