@@ -100,7 +100,7 @@ const Home: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.slice(0, 3).map((service) => (
+            {services.map((service) => (
               <div key={service.id} className="group bg-white dark:bg-surface-dark rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl hover:border-primary/30 transition-all transform hover:-translate-y-2">
                 <div className="h-56 bg-slate-200 overflow-hidden relative">
                   <img src={service.imageUrl} alt={service.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
@@ -122,12 +122,6 @@ const Home: React.FC = () => {
                 </div>
               </div>
             ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link to="/solutions" className="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
-              모든 서비스 보기 <span className="material-symbols-outlined">arrow_forward</span>
-            </Link>
           </div>
         </div>
       </section>
