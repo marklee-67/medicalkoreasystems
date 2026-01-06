@@ -1,7 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getContactContent, getInquiries, saveInquiries } from '../constants';
+import { ContactContent, Inquiry } from '../types';
 
 const Contact: React.FC = () => {
+  const [content, setContent] = useState<ContactContent>(getContactContent());
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -9,6 +12,12 @@ const Contact: React.FC = () => {
     subject: '',
     content: ''
   });
+
+  useEffect(() => {
+    const update = () => setContent(getContactContent());
+    window.addEventListener('storage_updated', update);
+    return () => window.removeEventListener('storage_updated', update);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -18,8 +27,21 @@ const Contact: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 1. 파일 내용 구성
     const timestamp = new Date().toLocaleString();
+    
+    // 1. Save to Local Storage for Admin
+    const newInquiry: Inquiry = {
+      id: String(Date.now()),
+      name: formData.name,
+      email: formData.email,
+      subject: formData.subject,
+      content: formData.content,
+      date: timestamp
+    };
+    const currentInquiries = getInquiries();
+    saveInquiries([newInquiry, ...currentInquiries]);
+
+    // 2. Original File Download Logic
     const fileContent = `
 [Medical Korea Systems - 문의 접수 내역]
 접수 일시: ${timestamp}
@@ -33,12 +55,9 @@ ${formData.content}
 ---------------------------------------
     `.trim();
 
-    // 2. Blob 생성 및 파일 다운로드 트리거
     const blob = new Blob([fileContent], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    
-    // 파일명 형식: MKS_문의_성함_날짜.txt
     const fileName = `MKS_Inquiry_${formData.name}_${new Date().toISOString().split('T')[0]}.txt`;
     
     link.href = url;
@@ -46,11 +65,9 @@ ${formData.content}
     document.body.appendChild(link);
     link.click();
     
-    // 정리
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 
-    // 3. 성공 상태 표시 및 폼 초기화
     setIsSubmitted(true);
     setFormData({ name: '', email: '', subject: '', content: '' });
     setTimeout(() => setIsSubmitted(false), 5000);
@@ -59,7 +76,7 @@ ${formData.content}
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[300px] md:h-[400px] flex items-center overflow-hidden">
+      <section className="relative h-[400px] md:h-[500px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1521791136064-7986c2959213?auto=format&fit=crop&q=80&w=2070" 
@@ -70,10 +87,9 @@ ${formData.content}
           <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#13a4ec 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
         </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-20 w-full relative z-10 text-white text-center">
-          <span className="inline-block px-4 py-1.5 bg-primary text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-6">24/7 전문 지원</span>
-          <h1 className="text-4xl md:text-6xl font-black mb-6">무엇을 도와드릴까요?</h1>
+          <h1 className="text-4xl md:text-5xl xl:text-[68px] font-black leading-[1.1] tracking-tight mb-6">{content.heroTitle}</h1>
           <p className="text-lg text-slate-200 max-w-2xl mx-auto leading-relaxed font-light">
-            MKS의 AI 기술 및 서비스에 대한 모든 문의사항을 남겨주세요. 전문가 그룹이 신속하게 답변해 드립니다.
+            {content.heroDescription}
           </p>
         </div>
       </section>
@@ -81,7 +97,6 @@ ${formData.content}
       <section className="py-20 px-6 lg:px-20 bg-white dark:bg-background-dark">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
           
-          {/* Left Column: Direct Contact & Info */}
           <div className="lg:col-span-5 flex flex-col gap-8">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <span className="material-symbols-outlined text-primary">info</span> 직접 문의
@@ -92,14 +107,14 @@ ${formData.content}
               </div>
               <div>
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">공식 지원 이메일</p>
-                <a href="mailto:info@medicalohub.com" className="text-xl md:text-2xl font-black text-slate-900 dark:text-white hover:text-primary transition-colors break-all">info@medicalohub.com</a>
+                <a href={`mailto:${content.email}`} className="text-xl md:text-2xl font-black text-slate-900 dark:text-white hover:text-primary transition-colors break-all">{content.email}</a>
               </div>
               <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-body">
-                의료 데이터 보안 및 파트너십과 관련된 민감한 사안은 이메일로 직접 문의해 주시기 바랍니다. 보통 4시간 이내에 첫 답변을 드립니다.
+                {content.emailDescription}
               </p>
               <button 
                 onClick={() => {
-                  navigator.clipboard.writeText('info@medicalohub.com');
+                  navigator.clipboard.writeText(content.email);
                   alert('이메일 주소가 복사되었습니다.');
                 }}
                 className="flex items-center gap-2 w-fit h-11 px-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl shadow-sm hover:shadow-md transition-all active:scale-95"
@@ -112,14 +127,13 @@ ${formData.content}
               <img src="https://picsum.photos/seed/map/800/600" alt="지도" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-6">
                 <div className="text-white">
-                  <h4 className="font-bold text-sm">본사 (Headquarters)</h4>
-                  <p className="text-xs opacity-80 font-body mt-1">서울특별시 강남구 테헤란로 (MKS 빌딩)</p>
+                  <h4 className="font-bold text-sm">{content.addressTitle}</h4>
+                  <p className="text-xs opacity-80 font-body mt-1">{content.address}</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Integrated Message Form */}
           <div className="lg:col-span-7">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 flex items-center gap-2">
               <span className="material-symbols-outlined text-primary">send</span> 메시지 보내기

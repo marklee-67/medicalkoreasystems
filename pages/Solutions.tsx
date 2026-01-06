@@ -17,7 +17,7 @@ const Solutions: React.FC = () => {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative h-[400px] flex items-center overflow-hidden">
+      <section className="relative h-[400px] md:h-[500px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=2070" 
@@ -27,9 +27,9 @@ const Solutions: React.FC = () => {
           <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-[2px]"></div>
         </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-20 w-full relative z-10 text-white">
-          <h1 className="text-4xl md:text-5xl font-black mb-4">MKS 헬스 솔루션</h1>
-          <p className="text-xl text-slate-200 max-w-2xl font-light">
-            인공지능 기술이 집약된 차세대 의료 서비스를 통해 미래의 건강 관리를 오늘 경험해 보세요.
+          <h1 className="text-4xl md:text-5xl xl:text-[68px] font-black leading-[1.1] tracking-tight mb-4">MKS 헬스 솔루션</h1>
+          <p className="text-xl text-slate-200 font-light md:whitespace-nowrap">
+            인공지능 기술이 집약된 차세대 의료 서비스를 통해 미래의 건강관리를 오늘 경험해 보세요
           </p>
         </div>
       </section>

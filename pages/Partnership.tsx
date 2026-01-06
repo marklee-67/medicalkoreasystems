@@ -1,12 +1,21 @@
 
-import React from 'react';
-import { PARTNERS } from '../constants';
+import React, { useState, useEffect } from 'react';
+import { getPartners } from '../constants';
+import { Partner } from '../types';
 
 const Partnership: React.FC = () => {
+  const [partners, setPartners] = useState<Partner[]>(getPartners());
+
+  useEffect(() => {
+    const update = () => setPartners(getPartners());
+    window.addEventListener('storage_updated', update);
+    return () => window.removeEventListener('storage_updated', update);
+  }, []);
+
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative h-[400px] flex items-center overflow-hidden">
+      <section className="relative h-[400px] md:h-[500px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=1974" 
@@ -16,16 +25,16 @@ const Partnership: React.FC = () => {
           <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[1px]"></div>
         </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-20 w-full relative z-10 text-white">
-          <h1 className="text-4xl md:text-5xl font-black mb-4">글로벌 파트너십</h1>
-          <p className="text-xl text-slate-200 max-w-2xl font-light">
-            국내외 유수의 의료 기관 및 기업들과 함께 혁신적인 헬스케어 생태계를 구축하고 있습니다.
+          <h1 className="text-4xl md:text-5xl xl:text-[68px] font-black leading-[1.1] tracking-tight mb-4">글로벌 파트너십</h1>
+          <p className="text-xl text-slate-200 font-light md:whitespace-nowrap">
+            국내의 유수의 의료기관 및 기업들과 함께 혁신적인 생태계를 구축하고 있습니다.
           </p>
         </div>
       </section>
 
       <section className="py-20 px-6 max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {PARTNERS.map((partner) => (
+          {partners.map((partner) => (
             <div key={partner.id} className="flex flex-col md:flex-row gap-6 p-6 bg-white dark:bg-surface-dark border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm">
               <div className="w-full md:w-40 h-40 shrink-0 rounded-xl overflow-hidden bg-slate-50">
                 <img src={partner.imageUrl} alt={partner.name} className="w-full h-full object-cover" />

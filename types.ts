@@ -26,3 +26,30 @@ export interface Partner {
   imageUrl: string;
   status?: string;
 }
+
+export interface TechContent {
+  heroTitle: string;
+  heroDescription: string;
+  sectionTitle: string;
+  sectionDescription: string;
+  aiDescription: string;
+  blockchainDescription: string;
+}
+
+export interface ContactContent {
+  heroTitle: string;
+  heroDescription: string;
+  email: string;
+  emailDescription: string;
+  addressTitle: string;
+  address: string;
+}
+
+export interface Inquiry {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  content: string;
+  date: string;
+}

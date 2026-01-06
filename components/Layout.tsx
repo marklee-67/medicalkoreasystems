@@ -17,17 +17,20 @@ const Navbar: React.FC = () => {
     { name: '솔루션', path: '/solutions' },
     { name: '기술력', path: '/technology' },
     { name: '파트너십', path: '/partnership' },
-    { name: '고객지원', path: '/contact' },
+    { name: '문의하기', path: '/contact' },
   ];
 
   return (
     <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800' : 'bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3">
-          <div className="text-primary">
-            <span className="material-symbols-outlined text-3xl">medical_services</span>
+        <Link to="/" className="flex items-center group">
+          <div className="flex items-center gap-1.5 bg-primary px-3 py-1.5 rounded-xl text-white shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">
+            <span className="material-symbols-outlined text-2xl font-bold">medical_services</span>
+            <span className="text-xl font-black tracking-tighter leading-none">MKS</span>
           </div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Medical Korea Systems</h1>
+          <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white ml-3 hidden sm:block">
+            Medical Korea Systems
+          </h1>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -40,9 +43,6 @@ const Navbar: React.FC = () => {
               {link.name}
             </Link>
           ))}
-          <button className="h-10 px-5 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary-dark transition-all transform hover:scale-105">
-            로그인
-          </button>
         </nav>
 
         <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-slate-600 dark:text-slate-300 p-2">
@@ -58,7 +58,6 @@ const Navbar: React.FC = () => {
               {link.name}
             </Link>
           ))}
-          <button className="w-full h-12 bg-primary text-white font-bold rounded-lg mt-2">로그인</button>
         </div>
       )}
     </header>
@@ -78,43 +77,46 @@ const Footer: React.FC = () => {
   }, []);
 
   return (
-    <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-12">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
+    <footer className="bg-white dark:bg-surface-dark border-t border-slate-100 dark:border-slate-800 py-16">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-2">
-          <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white">
-            <span className="material-symbols-outlined text-primary text-2xl">medical_services</span>
-            <span className="text-lg font-bold">Medical Korea Systems</span>
+          <div className="flex items-center gap-2 mb-6 text-slate-900 dark:text-white">
+            <div className="flex items-center gap-1.5 bg-primary px-3 py-1.5 rounded-xl text-white shadow-sm">
+              <span className="material-symbols-outlined text-xl font-bold">medical_services</span>
+              <span className="text-lg font-black tracking-tighter leading-none">MKS</span>
+            </div>
+            <span className="text-xl font-bold">Medical Korea Systems</span>
           </div>
-          <p className="text-slate-500 dark:text-slate-400 max-w-sm mb-6">
+          <p className="text-slate-500 dark:text-slate-400 max-w-sm mb-8 font-body leading-relaxed">
             AI 기반 건강 관리와 글로벌 의료 컨시어지 서비스를 통해 더 건강하고 스마트한 미래를 선도합니다.
           </p>
           <div className="flex gap-4">
-            <a href="#" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">public</span></a>
-            <a href="#" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">alternate_email</span></a>
-            <a href="#" className="text-slate-400 hover:text-primary transition-colors"><span className="material-symbols-outlined">chat</span></a>
+            <a href="#" className="w-10 h-10 rounded-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-transparent flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-primary hover:border-primary/30 transition-all"><span className="material-symbols-outlined text-xl">public</span></a>
+            <a href="#" className="w-10 h-10 rounded-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-transparent flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-primary hover:border-primary/30 transition-all"><span className="material-symbols-outlined text-xl">alternate_email</span></a>
+            <a href="#" className="w-10 h-10 rounded-full bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-transparent flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-primary hover:border-primary/30 transition-all"><span className="material-symbols-outlined text-xl">chat</span></a>
           </div>
         </div>
         <div>
-          <h4 className="font-bold text-slate-900 dark:text-white mb-6">회사 소개</h4>
-          <ul className="flex flex-col gap-3 text-slate-500 dark:text-slate-400 text-sm">
-            <li><Link to="/about" className="hover:text-primary">회사 개요</Link></li>
-            <li><Link to="/admin/login" className="hover:text-primary flex items-center gap-1">관리자</Link></li>
+          <h4 className="font-bold text-lg mb-6 text-slate-900 dark:text-white">회사 소개</h4>
+          <ul className="flex flex-col gap-4 text-slate-500 dark:text-slate-400 text-sm font-body">
+            <li><Link to="/about" className="hover:text-primary transition-colors">회사 개요</Link></li>
+            <li><Link to="/admin/login" className="hover:text-primary transition-colors flex items-center gap-1.5"><span className="material-symbols-outlined text-sm">admin_panel_settings</span> 관리자 모드</Link></li>
           </ul>
         </div>
         <div>
-          <h4 className="font-bold text-slate-900 dark:text-white mb-6">솔루션</h4>
-          <ul className="flex flex-col gap-3 text-slate-500 dark:text-slate-400 text-sm">
+          <h4 className="font-bold text-lg mb-6 text-slate-900 dark:text-white">솔루션</h4>
+          <ul className="flex flex-col gap-4 text-slate-500 dark:text-slate-400 text-sm font-body">
             {dynamicServices.map(s => (
-              <li key={s.id}><Link to={`/service/${s.id}`} className="hover:text-primary">{s.name}</Link></li>
+              <li key={s.id}><Link to={`/service/${s.id}`} className="hover:text-primary transition-colors">{s.name}</Link></li>
             ))}
           </ul>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+      <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-slate-100 dark:border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400">
         <p>© 2024 Medical Korea Systems. All rights reserved.</p>
-        <div className="flex gap-6 items-center">
-          <a href="#" className="hover:text-primary">개인정보처리방침</a>
-          <a href="#" className="hover:text-primary">이용약관</a>
+        <div className="flex gap-8 items-center">
+          <a href="#" className="hover:text-primary transition-colors">개인정보처리방침</a>
+          <a href="#" className="hover:text-primary transition-colors">이용약관</a>
         </div>
       </div>
     </footer>

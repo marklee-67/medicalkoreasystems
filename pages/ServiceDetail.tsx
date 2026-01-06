@@ -7,6 +7,7 @@ import { Service } from '../types';
 const ServiceDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | undefined>(undefined);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const services = getServices();
@@ -24,8 +25,39 @@ const ServiceDetail: React.FC = () => {
     );
   }
 
+  const handleStartClick = () => {
+    setIsModalOpen(true);
+  };
+
   return (
-    <div className="flex flex-col animate-in fade-in duration-500">
+    <div className="flex flex-col animate-in fade-in duration-500 relative">
+      {/* Custom Modal Popup */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6">
+          <div 
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300"
+            onClick={() => setIsModalOpen(false)}
+          ></div>
+          <div className="relative bg-white dark:bg-surface-dark w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+            <div className="p-8 text-center">
+              <div className="size-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="material-symbols-outlined text-4xl">construction</span>
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">서비스 준비 중</h3>
+              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8">
+                현재 해당 솔루션의 고도화 작업이 진행 중입니다.<br/>빠른 시일 내에 찾아뵙겠습니다.
+              </p>
+              <button 
+                onClick={() => setIsModalOpen(false)}
+                className="w-full h-12 bg-primary text-white font-bold rounded-xl hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
+              >
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero */}
       <section className="relative h-[450px] md:h-[600px] flex items-center px-6 lg:px-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -38,10 +70,15 @@ const ServiceDetail: React.FC = () => {
               <span className="material-symbols-outlined text-primary">auto_awesome</span>
               <span className="text-sm font-bold uppercase tracking-[0.2em] opacity-80">{service.category}</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">{service.title}</h1>
+            <h1 className="text-4xl md:text-5xl xl:text-[68px] font-black leading-[1.1] tracking-tight mb-6">{service.title}</h1>
             <p className="text-lg md:text-xl text-slate-200 font-light leading-relaxed mb-10">{service.description}</p>
             <div className="flex flex-wrap gap-4">
-              <button className="h-14 px-10 bg-primary text-white font-bold rounded-xl hover:bg-primary-dark transition-all">시작하기</button>
+              <button 
+                onClick={handleStartClick}
+                className="h-14 px-10 bg-primary text-white font-bold rounded-xl hover:bg-primary-dark transition-all shadow-xl shadow-primary/25"
+              >
+                시작하기
+              </button>
               <button className="h-14 px-10 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-xl hover:bg-white/20 transition-all">브로슈어 다운로드</button>
             </div>
           </div>
@@ -67,7 +104,7 @@ const ServiceDetail: React.FC = () => {
           </div>
           <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-video">
              <img src={service.imageUrl || `https://picsum.photos/seed/${service.id}-2/800/600`} alt="기능 설명" className="w-full h-full object-cover" />
-             <div className="absolute top-4 right-4 bg-white/90 dark:bg-surface-dark/90 px-4 py-2 rounded-xl text-xs font-bold border border-slate-100 dark:border-slate-800">
+             <div className="absolute top-4 right-4 bg-white/90 dark:bg-surface-dark/90 px-4 py-2 rounded-xl text-xs font-bold border border-slate-100 dark:border-slate-800 text-slate-900 dark:text-white">
                 인증된 AI 분석 시스템
              </div>
           </div>
