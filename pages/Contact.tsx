@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { getContactContent, getInquiries, saveInquiries } from '../constants';
+import { getContactContent, getInquiries, saveInquiries, getCurrentLang } from '../constants';
 import { ContactContent, Inquiry } from '../types';
 
 const Contact: React.FC = () => {
   const [content, setContent] = useState<ContactContent>(getContactContent());
+  const [lang, setLang] = useState(getCurrentLang());
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -14,7 +15,10 @@ const Contact: React.FC = () => {
   });
 
   useEffect(() => {
-    const update = () => setContent(getContactContent());
+    const update = () => {
+        setContent(getContactContent());
+        setLang(getCurrentLang());
+    };
     window.addEventListener('storage_updated', update);
     return () => window.removeEventListener('storage_updated', update);
   }, []);
@@ -43,14 +47,14 @@ const Contact: React.FC = () => {
 
     // 2. Original File Download Logic
     const fileContent = `
-[Medical Korea Systems - 문의 접수 내역]
-접수 일시: ${timestamp}
+[Medical Korea Systems - ${lang === 'ko' ? '문의 접수 내역' : 'Inquiry Details'}]
+${lang === 'ko' ? '접수 일시' : 'Date'}: ${timestamp}
 ---------------------------------------
-성함 / 담당자: ${formData.name}
-이메일 주소: ${formData.email}
-문의 제목: ${formData.subject}
+${content.formName}: ${formData.name}
+${content.formEmail}: ${formData.email}
+${content.formSubject}: ${formData.subject}
 
-상세 내용:
+${content.formContent}:
 ${formData.content}
 ---------------------------------------
     `.trim();
@@ -99,14 +103,14 @@ ${formData.content}
           
           <div className="lg:col-span-5 flex flex-col gap-8">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">info</span> 직접 문의
+              <span className="material-symbols-outlined text-primary">info</span> {lang === 'ko' ? '직접 문의' : 'Direct Contact'}
             </h2>
             <div className="bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-3xl p-8 flex flex-col gap-6 shadow-sm">
               <div className="size-14 bg-white dark:bg-slate-800 rounded-2xl shadow-sm text-primary flex items-center justify-center">
                 <span className="material-symbols-outlined text-3xl">mail</span>
               </div>
               <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">공식 지원 이메일</p>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">{lang === 'ko' ? '공식 지원 이메일' : 'Official Support Email'}</p>
                 <a href={`mailto:${content.email}`} className="text-xl md:text-2xl font-black text-slate-900 dark:text-white hover:text-primary transition-colors break-all">{content.email}</a>
               </div>
               <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-body">
@@ -115,16 +119,16 @@ ${formData.content}
               <button 
                 onClick={() => {
                   navigator.clipboard.writeText(content.email);
-                  alert('이메일 주소가 복사되었습니다.');
+                  alert(lang === 'ko' ? '이메일 주소가 복사되었습니다.' : 'Email address copied to clipboard.');
                 }}
                 className="flex items-center gap-2 w-fit h-11 px-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-xl shadow-sm hover:shadow-md transition-all active:scale-95"
               >
-                <span className="material-symbols-outlined text-lg">content_copy</span> 이메일 주소 복사
+                <span className="material-symbols-outlined text-lg">content_copy</span> {lang === 'ko' ? '이메일 주소 복사' : 'Copy Email Address'}
               </button>
             </div>
 
             <div className="relative h-60 rounded-3xl overflow-hidden shadow-sm group border border-slate-100 dark:border-slate-800">
-              <img src="https://picsum.photos/seed/map/800/600" alt="지도" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src="https://picsum.photos/seed/map/800/600" alt="Map" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-6">
                 <div className="text-white">
                   <h4 className="font-bold text-sm">{content.addressTitle}</h4>
@@ -136,7 +140,7 @@ ${formData.content}
 
           <div className="lg:col-span-7">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">send</span> 메시지 보내기
+              <span className="material-symbols-outlined text-primary">send</span> {lang === 'ko' ? '메시지 보내기' : 'Send Message'}
             </h2>
             
             {isSubmitted ? (
@@ -144,32 +148,32 @@ ${formData.content}
                 <div className="size-20 bg-green-500 text-white rounded-full flex items-center justify-center mb-6 shadow-lg">
                   <span className="material-symbols-outlined text-4xl">check</span>
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">문의가 파일로 저장되었습니다!</h3>
-                <p className="text-slate-500 dark:text-slate-400">다운로드된 파일을 확인해주세요. 담당자가 기재해주신 이메일로 곧 연락 드리겠습니다.</p>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{lang === 'ko' ? '문의가 파일로 저장되었습니다!' : 'Inquiry saved as file!'}</h3>
+                <p className="text-slate-500 dark:text-slate-400">{lang === 'ko' ? '다운로드된 파일을 확인해주세요. 담당자가 곧 연락 드리겠습니다.' : 'Please check the downloaded file. We will contact you soon.'}</p>
                 <button 
                   onClick={() => setIsSubmitted(false)}
                   className="mt-8 text-primary font-bold hover:underline"
                 >
-                  새로운 메시지 작성
+                  {lang === 'ko' ? '새로운 메시지 작성' : 'Write new message'}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
-                    <label className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">성함 / 담당자</label>
+                    <label className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">{content.formName}</label>
                     <input 
                       required
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
                       type="text" 
-                      placeholder="성함을 입력해주세요"
+                      placeholder={lang === 'ko' ? "성함을 입력해주세요" : "Enter your name"}
                       className="h-12 px-4 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 focus:ring-2 focus:ring-primary focus:border-transparent transition-all dark:text-white"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">이메일 주소</label>
+                    <label className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">{content.formEmail}</label>
                     <input 
                       required
                       name="email"
@@ -183,27 +187,27 @@ ${formData.content}
                 </div>
                 
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">문의 제목</label>
+                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">{content.formSubject}</label>
                   <input 
                     required
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
                     type="text" 
-                    placeholder="문의하시려는 핵심 내용을 입력해주세요"
+                    placeholder={lang === 'ko' ? "문의하시려는 핵심 내용을 입력해주세요" : "Enter the core subject of your inquiry"}
                     className="h-12 px-4 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 focus:ring-2 focus:ring-primary focus:border-transparent transition-all dark:text-white"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">상세 내용</label>
+                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 ml-1">{content.formContent}</label>
                   <textarea 
                     required
                     name="content"
                     value={formData.content}
                     onChange={handleChange}
                     rows={6}
-                    placeholder="궁금하신 내용을 자세히 기재해 주시면 더 정확한 상담이 가능합니다."
+                    placeholder={lang === 'ko' ? "궁금하신 내용을 자세히 기재해 주세요." : "Please provide detailed information."}
                     className="p-4 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 focus:ring-2 focus:ring-primary focus:border-transparent transition-all dark:text-white resize-none"
                   ></textarea>
                 </div>
@@ -211,7 +215,7 @@ ${formData.content}
                 <div className="flex items-center gap-2 mt-2">
                   <input type="checkbox" required id="privacy" className="rounded border-slate-300 text-primary focus:ring-primary" />
                   <label htmlFor="privacy" className="text-xs text-slate-500 dark:text-slate-400">
-                    개인정보 수집 및 이용에 동의합니다.
+                    {content.formPrivacy}
                   </label>
                 </div>
 
@@ -219,7 +223,7 @@ ${formData.content}
                   type="submit" 
                   className="h-14 mt-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary-dark hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
                 >
-                  문의 제출하기 <span className="material-symbols-outlined text-xl">save</span>
+                  {content.formSubmit} <span className="material-symbols-outlined text-xl">save</span>
                 </button>
               </form>
             )}

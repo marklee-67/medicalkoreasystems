@@ -1,22 +1,30 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getServices } from '../constants';
+import { getServices, getCurrentLang } from '../constants';
 import { Service } from '../types';
 
 const Solutions: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
+  const [lang, setLang] = useState(getCurrentLang());
 
   useEffect(() => {
-    const update = () => setServices(getServices());
+    const update = () => {
+      setServices(getServices());
+      setLang(getCurrentLang());
+    };
     update();
     window.addEventListener('storage_updated', update);
     return () => window.removeEventListener('storage_updated', update);
   }, []);
 
+  const titles = {
+    ko: { main: 'MKS 헬스 솔루션', sub: '인공지능 기술이 집약된 차세대 의료 서비스를 통해 미래의 건강관리를 오늘 경험해 보세요', more: '상세보기' },
+    en: { main: 'MKS Health Solutions', sub: 'Experience future healthcare today through next-generation medical services integrated with AI.', more: 'Details' }
+  }[lang];
+
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
@@ -27,14 +35,13 @@ const Solutions: React.FC = () => {
           <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-[2px]"></div>
         </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-20 w-full relative z-10 text-white">
-          <h1 className="text-4xl md:text-5xl xl:text-[68px] font-black leading-[1.1] tracking-tight mb-4">MKS 헬스 솔루션</h1>
-          <p className="text-xl text-slate-200 font-light md:whitespace-nowrap">
-            인공지능 기술이 집약된 차세대 의료 서비스를 통해 미래의 건강관리를 오늘 경험해 보세요
+          <h1 className="text-4xl md:text-5xl xl:text-[68px] font-black leading-[1.1] tracking-tight mb-4">{titles.main}</h1>
+          <p className="text-xl text-slate-200 font-light max-w-2xl leading-relaxed">
+            {titles.sub}
           </p>
         </div>
       </section>
 
-      {/* Solutions Grid */}
       <section className="py-20 px-6 max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service) => (
@@ -50,7 +57,7 @@ const Solutions: React.FC = () => {
                 <h3 className="text-xl font-bold mb-2 dark:text-white">{service.name}</h3>
                 <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 line-clamp-2">{service.description}</p>
                 <Link to={`/service/${service.id}`} className="inline-flex items-center text-sm font-bold text-primary hover:gap-2 transition-all">
-                  상세보기 <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  {titles.more} <span className="material-symbols-outlined text-sm">arrow_forward</span>
                 </Link>
               </div>
             </div>

@@ -1,29 +1,37 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getServices } from '../constants';
+import { getServices, getCurrentLang, UI_TEXT } from '../constants';
 import { Service } from '../types';
 
 const ServiceDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [service, setService] = useState<Service | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lang, setLang] = useState(getCurrentLang());
 
   useEffect(() => {
-    const services = getServices();
-    setService(services.find(s => s.id === id));
+    const update = () => {
+        setService(getServices().find(s => s.id === id));
+        setLang(getCurrentLang());
+    };
+    update();
+    window.addEventListener('storage_updated', update);
+    return () => window.removeEventListener('storage_updated', update);
   }, [id]);
 
   if (!service) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">서비스를 찾을 수 없습니다.</h2>
-          <Link to="/" className="text-primary font-bold underline">홈으로 이동</Link>
+          <h2 className="text-2xl font-bold mb-4">{lang === 'ko' ? '서비스를 찾을 수 없습니다.' : 'Service not found.'}</h2>
+          <Link to="/" className="text-primary font-bold underline">{lang === 'ko' ? '홈으로 이동' : 'Back to Home'}</Link>
         </div>
       </div>
     );
   }
+
+  const t = UI_TEXT[lang].serviceDetail;
 
   const handleStartClick = () => {
     setIsModalOpen(true);
@@ -43,15 +51,15 @@ const ServiceDetail: React.FC = () => {
               <div className="size-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
                 <span className="material-symbols-outlined text-4xl">construction</span>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">서비스 준비 중</h3>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{t.preparing}</h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8">
-                현재 해당 솔루션의 고도화 작업이 진행 중입니다.<br/>빠른 시일 내에 찾아뵙겠습니다.
+                {t.preparingDesc}
               </p>
               <button 
                 onClick={() => setIsModalOpen(false)}
                 className="w-full h-12 bg-primary text-white font-bold rounded-xl hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
               >
-                확인
+                {t.confirm}
               </button>
             </div>
           </div>
@@ -77,9 +85,9 @@ const ServiceDetail: React.FC = () => {
                 onClick={handleStartClick}
                 className="h-14 px-10 bg-primary text-white font-bold rounded-xl hover:bg-primary-dark transition-all shadow-xl shadow-primary/25"
               >
-                시작하기
+                {t.start}
               </button>
-              <button className="h-14 px-10 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-xl hover:bg-white/20 transition-all">브로슈어 다운로드</button>
+              <button className="h-14 px-10 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold rounded-xl hover:bg-white/20 transition-all">{t.brochure}</button>
             </div>
           </div>
         </div>
@@ -89,7 +97,7 @@ const ServiceDetail: React.FC = () => {
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">최고 수준의 헬스케어, <br/><span className="text-primary">당신만을 위한 맞춤 서비스</span></h2>
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6">{t.highlight.split(',')[0]}, <br/><span className="text-primary">{t.highlight.split(',')[1]}</span></h2>
             <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mb-8">{service.longDescription}</p>
             <div className="grid grid-cols-2 gap-6">
               {service.features?.map((feature, i) => (
@@ -103,9 +111,9 @@ const ServiceDetail: React.FC = () => {
             </div>
           </div>
           <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-video">
-             <img src={service.imageUrl || `https://picsum.photos/seed/${service.id}-2/800/600`} alt="기능 설명" className="w-full h-full object-cover" />
+             <img src={service.imageUrl || `https://picsum.photos/seed/${service.id}-2/800/600`} alt="Feature Image" className="w-full h-full object-cover" />
              <div className="absolute top-4 right-4 bg-white/90 dark:bg-surface-dark/90 px-4 py-2 rounded-xl text-xs font-bold border border-slate-100 dark:border-slate-800 text-slate-900 dark:text-white">
-                인증된 AI 분석 시스템
+                {t.certified}
              </div>
           </div>
         </div>
@@ -113,9 +121,9 @@ const ServiceDetail: React.FC = () => {
 
       {/* CTA */}
       <section className="bg-slate-900 py-20 px-6 text-center text-white">
-        <h2 className="text-3xl font-bold mb-6">미래의 헬스케어를 경험할 준비가 되셨나요?</h2>
-        <p className="text-slate-400 text-lg mb-10 max-w-2xl mx-auto font-light">이미 수많은 사용자가 MKS의 AI 솔루션을 통해 자신의 건강을 스마트하게 관리하고 있습니다.</p>
-        <button className="h-14 px-12 bg-primary text-white font-bold rounded-xl shadow-2xl hover:bg-primary-dark transition-all">데모 세션 요청하기</button>
+        <h2 className="text-3xl font-bold mb-6">{t.ctaTitle}</h2>
+        <p className="text-slate-400 text-lg mb-10 max-w-2xl mx-auto font-light">{t.ctaDesc}</p>
+        <button className="h-14 px-12 bg-primary text-white font-bold rounded-xl shadow-2xl hover:bg-primary-dark transition-all">{t.demo}</button>
       </section>
     </div>
   );

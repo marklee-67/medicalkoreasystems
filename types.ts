@@ -32,8 +32,19 @@ export interface TechContent {
   heroDescription: string;
   sectionTitle: string;
   sectionDescription: string;
+  coreInnovations: string;
+  aiTitle: string;
   aiDescription: string;
+  aiFeatures: string[];
+  blockchainTitle: string;
   blockchainDescription: string;
+  blockchainFeatures: string[];
+  bottomTitle: string;
+  bottomDescription: string;
+  stat1Value: string;
+  stat1Label: string;
+  stat2Value: string;
+  stat2Label: string;
 }
 
 export interface ContactContent {
@@ -43,6 +54,12 @@ export interface ContactContent {
   emailDescription: string;
   addressTitle: string;
   address: string;
+  formName: string;
+  formEmail: string;
+  formSubject: string;
+  formContent: string;
+  formSubmit: string;
+  formPrivacy: string;
 }
 
 export interface Inquiry {
