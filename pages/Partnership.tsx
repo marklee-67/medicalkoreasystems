@@ -1,16 +1,23 @@
 
 import React, { useState, useEffect } from 'react';
-import { getPartners } from '../constants';
+import { getPartners, getCurrentLang, UI_TEXT } from '../constants';
 import { Partner } from '../types';
 
 const Partnership: React.FC = () => {
-  const [partners, setPartners] = useState<Partner[]>(getPartners());
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [lang, setLang] = useState(getCurrentLang());
 
   useEffect(() => {
-    const update = () => setPartners(getPartners());
+    const update = () => {
+      setPartners(getPartners());
+      setLang(getCurrentLang());
+    };
+    update();
     window.addEventListener('storage_updated', update);
     return () => window.removeEventListener('storage_updated', update);
   }, []);
+
+  const t = UI_TEXT[lang].partnership;
 
   return (
     <div className="flex flex-col">
@@ -25,9 +32,11 @@ const Partnership: React.FC = () => {
           <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-[1px]"></div>
         </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-20 w-full relative z-10 text-white">
-          <h1 className="text-4xl md:text-5xl xl:text-[68px] font-black leading-[1.1] tracking-tight mb-4">글로벌 파트너십</h1>
+          <h1 className="text-4xl md:text-5xl xl:text-[68px] font-black leading-[1.1] tracking-tight mb-4">
+            {t.title}
+          </h1>
           <p className="text-xl text-slate-200 font-light md:whitespace-nowrap">
-            국내의 유수의 의료기관 및 기업들과 함께 혁신적인 생태계를 구축하고 있습니다.
+            {t.desc}
           </p>
         </div>
       </section>
@@ -49,7 +58,7 @@ const Partnership: React.FC = () => {
                   <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">{partner.description}</p>
                 </div>
                 <div className="pt-4 border-t border-slate-50 dark:border-slate-800">
-                  <p className="text-xs font-bold text-primary mb-1">협력 범위</p>
+                  <p className="text-xs font-bold text-primary mb-1">{t.scope}</p>
                   <p className="text-xs text-slate-600 dark:text-slate-300">{partner.scope}</p>
                 </div>
               </div>

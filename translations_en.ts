@@ -48,7 +48,7 @@ export const EN_SERVICES: Service[] = [
   },
   {
     id: 'foreign-patient-platform',
-    name: 'International Patient Platform',
+    name: 'International Healthcare Coordination Platform',
     title: 'Unified Concierge for Global Patients',
     description: 'AI-powered platform managing the entire journey from booking to follow-up care.',
     longDescription: 'Medical Korea Systems transcends language barriers to offer top-tier medical care for international patients with multilingual support and AI translation.',
