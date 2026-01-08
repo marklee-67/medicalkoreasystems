@@ -16,24 +16,24 @@ export const EN_SERVICES: Service[] = [
   {
     id: 'nutricheck',
     name: 'NutriCheck',
-    title: 'Smart Nutrition & Health Management',
-    description: 'AI-based diet analysis and personalized nutrition planning solution.',
-    longDescription: 'Log meals instantly with photo captures or QR scans. NutriCheck analyzes nutrients, tracks trends, and uses gamified rewards to help achieve health goals.',
-    icon: 'restaurant_menu',
+    title: 'AI-Powered Personalized Supplement Curation',
+    description: 'AI analyzes health check-up results and medical questionnaires to recommend and deliver the supplements you actually need.',
+    longDescription: 'NutriCheck goes beyond simple tracking by analyzing actual health check-up records and medical survey data using deep learning AI. Based on this, it delivers personalized supplements via 1, 3, or 6-month subscription plans. To ensure consistency, a point-based reward system encourages daily consumption and helps build lasting health habits.',
+    icon: 'vaccines',
     imageUrl: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=800',
-    features: ['Photo-based Nutrition Analysis', 'Smart Restaurant QR Linkage', 'Personalized Reward System', 'Metabolic Trend Tracking'],
+    features: ['AI Analysis of Health Check-up Data', 'Custom Supplement Subscription (1/3/6 mo)', 'Consumption Tracking & Point Rewards', 'Tailored Health Questionnaire Algorithm'],
     category: 'Nutrition'
   },
   {
-    id: 'hellios',
-    name: 'HELLIOS',
-    title: 'Decoding Health via Voice Signals',
-    description: 'Sophisticated vocal biomarker engine for real-time diagnostic prediction.',
-    longDescription: 'HELLIOS converts raw vocal data into medical insights. By analyzing pitch, tone, and rhythm, it non-invasively detects health anomalies and emotional states.',
-    icon: 'graphic_eq',
-    imageUrl: 'https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=800',
-    features: ['Vocal Biomarker Analysis', 'Real-time Data Processing', 'Emotional State Detection', 'Telemedicine Integration'],
-    category: 'Voice AI'
+    id: 'helios',
+    name: 'HELIOS™',
+    title: 'Visit Prediction via Unstructured Data',
+    description: 'AI solution that analyzes medical consultation data to predict visit probability and emotional flows.',
+    longDescription: 'HELIOS™ deep-analyzes fragmented unstructured data such as text and voice from consultations. By identifying psychological changes and needs in real-time, it scientifically predicts the likelihood of hospital visits and suggests optimal communication strategies to maximize conversion and satisfaction.',
+    icon: 'insights',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
+    features: ['Visit Probability Algorithms', 'Real-time Emotional Flow Analysis', 'Unstructured Consultation Data Mining', 'Customized Interaction Guides'],
+    category: 'Consultation AI'
   },
   {
     id: 'medi-bar',
@@ -73,8 +73,8 @@ export const EN_TECH: TechContent = {
   blockchainFeatures: ['Medical data integrity system', 'Patient-centered data sovereignty', 'Transparent record sharing ecosystem'],
   bottomTitle: 'Continuous Technological Evolution',
   bottomDescription: 'Medical Korea Systems never settles. We are setting global standards for precision medicine by integrating next-gen security like quantum encryption and LLM-powered medical assistants.',
-  stat1Value: '15+',
-  stat1Label: 'Patents Held',
+  stat1Value: '2+',
+  stat1Label: 'Patent Applications',
   stat2Value: '24/7',
   stat2Label: 'System Monitoring'
 };
@@ -86,7 +86,7 @@ export const EN_PARTNERS: Partner[] = [
     type: 'Institution',
     description: 'A leading health screening institution providing comprehensive services across Korea.',
     scope: 'AI health screening data analysis & preventive medicine',
-    imageUrl: 'https://picsum.photos/seed/kmi/400/300',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800',
     status: 'Active Partner'
   },
   {
@@ -106,7 +106,7 @@ export const EN_CONTACT: ContactContent = {
   email: 'info@medicalohub.com',
   emailDescription: 'For sensitive matters regarding data security or partnerships, please email us directly. We usually respond within 4 hours.',
   addressTitle: 'Headquarters',
-  address: 'Teheran-ro, Gangnam-gu, Seoul, Republic of Korea',
+  address: 'Rm 101, 1F, 154-29, Imbangul-daero, Gwangsan-gu, Gwangju, Republic of Korea',
   formName: 'Name / Contact Person',
   formEmail: 'Email Address',
   formSubject: 'Inquiry Subject',

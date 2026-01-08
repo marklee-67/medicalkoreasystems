@@ -16,24 +16,24 @@ export const KO_SERVICES: Service[] = [
   {
     id: 'nutricheck',
     name: 'NutriCheck',
-    title: '스마트한 영양 및 건강 관리',
-    description: 'AI 기반 식단 분석 및 개인 맞춤형 영양 계획 솔루션입니다.',
-    longDescription: '사진 촬영이나 QR 스캔으로 식사를 즉시 기록하세요. NutriCheck은 영양소를 분석하고 트렌드를 추적하며, 보상 시스템이 결합된 게임화 요소를 통해 건강 목표 달성을 돕습니다.',
-    icon: 'restaurant_menu',
+    title: 'AI 기반 맞춤형 건강기능식품 큐레이션',
+    description: '건강검진 결과와 문진 데이터를 AI로 분석하여 당신에게 꼭 필요한 영양제를 추천하고 정기구독 서비스로 제공합니다.',
+    longDescription: 'NutriCheck은 단순한 영양 관리를 넘어, 사용자의 실제 건강검진 기록과 전문 문진 데이터를 딥러닝 AI로 분석합니다. 분석된 데이터를 바탕으로 개인에게 최적화된 맞춤형 건강기능식품을 1개월, 3개월, 6개월 단위의 구독 모델로 배송하며, 꾸준한 복용을 독려하기 위한 포인트 보상 체계를 통해 건강 습관 형성을 돕습니다.',
+    icon: 'vaccines',
     imageUrl: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=800',
-    features: ['사진 기반 영양 분석', '스마트 식당 QR 연동', '개인별 보상 체계', '대사 지표 추적'],
+    features: ['건강검진 데이터 기반 AI 분석', '개인 맞춤형 영양제 구독 (1/3/6개월)', '복용 체크 및 포인트 보상 시스템', '맞춤형 건강 문진 알고리즘'],
     category: '영양 관리'
   },
   {
-    id: 'hellios',
-    name: 'HELLIOS',
-    title: '목소리로 해독하는 건강 신호',
-    description: '실시간 진단 예측을 위한 고도화된 음성 바이오마커 엔진입니다.',
-    longDescription: 'HELLIOS는 가공되지 않은 음성 데이터를 의료적 통찰로 전환하는 최첨단 AI 엔진입니다. 음조, 높낮이, 리듬을 분석하여 비침습적으로 건강 이상 징후와 정서 상태를 감지합니다.',
-    icon: 'graphic_eq',
-    imageUrl: 'https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=800',
-    features: ['음향 바이오마커 분석', '실시간 데이터 처리', '정서 및 심리 상태 감지', '원격 의료 시스템 통합'],
-    category: '음성 AI'
+    id: 'helios',
+    name: 'HELIOS™',
+    title: '비정형 데이터 속의 내원 신호 포착',
+    description: '의료 상담 데이터를 정밀 분석하여 고객의 내원 가능성과 감정의 흐름을 예측하는 AI 솔루션입니다.',
+    longDescription: 'HELIOS™는 상담 과정에서 발생하는 텍스트와 음성 등 파편화된 비정형 데이터를 AI로 심층 분석합니다. 단순한 기록을 넘어 고객의 심리적 변화와 필요를 실시간으로 파악함으로써, 병원 방문 가능성을 과학적으로 예측하고 최적의 상담 전략을 제안하여 고객 만족도와 전환율을 극대화합니다.',
+    icon: 'insights',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
+    features: ['내원 확률 예측 알고리즘', '실시간 감정 흐름 분석', '비정형 의료 상담 데이터 마이닝', '맞춤형 상담 가이드 제공'],
+    category: '상담 AI'
   },
   {
     id: 'medi-bar',
@@ -73,8 +73,8 @@ export const KO_TECH: TechContent = {
   blockchainFeatures: ['의료 데이터 위변조 방지 시스템', '환자 중심 데이터 주권 보장', '투명한 의료 기록 공유 체계'],
   bottomTitle: '끊임없는 기술 고도화',
   bottomDescription: 'Medical Korea Systems는 현재에 안주하지 않습니다. 양자 암호화 기술을 포함한 차세대 보안 기술과 초거대 언어 모델(LLM)을 연동한 맞춤형 의료 어시스턴트 개발을 통해 글로벌 정밀 의료 시장의 표준을 만들어가고 있습니다.',
-  stat1Value: '15+',
-  stat1Label: '보유 특허',
+  stat1Value: '2+',
+  stat1Label: '특허 출원',
   stat2Value: '24/7',
   stat2Label: '시스템 관제'
 };
@@ -86,7 +86,7 @@ export const KO_PARTNERS: Partner[] = [
     type: 'Institution',
     description: '대한민국 전역에 종합 검진 서비스를 제공하는 선도적인 건강검진 기관입니다.',
     scope: 'AI 건강 검진 데이터 분석 및 예방 의학',
-    imageUrl: 'https://picsum.photos/seed/kmi/400/300',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800',
     status: '활성 파트너'
   },
   {
@@ -106,7 +106,7 @@ export const KO_CONTACT: ContactContent = {
   email: 'info@medicalohub.com',
   emailDescription: '의료 데이터 보안 및 파트너십과 관련된 민감한 사안은 이메일로 직접 문의해 주시기 바랍니다. 보통 4시간 이내에 첫 답변을 드립니다.',
   addressTitle: '본사 (Headquarters)',
-  address: '서울특별시 강남구 테헤란로 (MKS 빌딩)',
+  address: '광주광역시 광산구 임방울대로 154-29 1층 101호',
   formName: '성함 / 담당자',
   formEmail: '이메일 주소',
   formSubject: '문의 제목',

@@ -14,6 +14,39 @@ export const SI_SERVICES: Service[] = [
     category: 'AI රෝග විනිශ්චය'
   },
   {
+    id: 'nutricheck',
+    name: 'NutriCheck',
+    title: 'AI මගින් පාලනය වන පුද්ගලීකරණය කළ පෝෂණ විසඳුම්',
+    description: 'ඔබේ සෞඛ්‍ය පරීක්ෂණ වාර්තා විශ්ලේෂණය කර ඔබට අවශ්‍ය විටමින් සහ පෝෂක AI මගින් නිර්දේශ කරයි.',
+    longDescription: 'NutriCheck ඔබේ සෞඛ්‍ය දත්ත මත පදනම්ව මාස 1, 3 හෝ 6 සඳහා පෝෂණ ද්‍රව්‍ය සපයන අතර, නිවැරදිව ලබා ගැනීම සඳහා ලකුණු (points) ලබා දෙන ක්‍රමයක් ද හඳුන්වා දෙයි.',
+    icon: 'vaccines',
+    imageUrl: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=800',
+    features: ['AI සෞඛ්‍ය දත්ත විශ්ලේෂණය', 'මාස 1/3/6 දායකත්ව සේවා', 'ලකුණු සහ ත්‍යාග ක්‍රමය'],
+    category: 'පෝෂණ කළමනාකරණය'
+  },
+  {
+    id: 'helios',
+    name: 'HELIOS™',
+    title: 'අසංකෘත දත්ත හරහා පැමිණීමේ පුරෝකථනය',
+    description: 'වෛද්‍ය උපදෙස් දත්ත විශ්ලේෂණය කර පැමිණීමේ සම්භාවිතාව පුරෝකථනය කරන AI විසඳුම.',
+    longDescription: 'HELIOS™ උපදේශන වලින් පෙළ සහ හඬ වැනි විවිධ අසංකෘත දත්ත ගැඹුරින් විශ්ලේෂණය කරයි. තථ්‍ය කාලීන මනෝවිද්‍යාත්මක වෙනස්කම් සහ අවශ්‍යතා හඳුනා ගැනීමෙන්, එය විද්‍යාත්මකව රෝහල් පැමිණීමේ සම්භාවිතාව පුරෝකථනය කරයි.',
+    icon: 'insights',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
+    features: ['පැමිණීමේ සම්භාවිතාව', 'හැඟීම් විශ්ලේෂණය', 'වෛද්‍ය උපදේශන දත්ත'],
+    category: 'උපදේශන AI'
+  },
+  {
+    id: 'medi-bar',
+    name: 'Medi-bar Platform',
+    title: 'ඒකාබද්ධ වෛද්‍ය දත්ත සහ සේවා මධ්‍යස්ථානය',
+    description: 'රෝහල්, රෝගීන් සහ පරිපාලකයින් සම්බන්ධ කරන බුද්ධිමත් වේදිකාව.',
+    longDescription: 'Medi-bar වේදිකාව විසිරී ඇති වෛද්‍ය දත්ත ප්‍රමිතිගත කරන අතර තථ්‍ය කාලීන සෞඛ්‍ය අවබෝධයක් ලබා දීම සඳහා MKS AI එන්ජින් සමඟ ඒකාබද්ධ වේ.',
+    icon: 'hub',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800',
+    features: ['දත්ත ප්‍රමිතිකරණය', 'AI API සම්බන්ධතාවය', 'දත්ත කළමනාකරණය'],
+    category: 'වෛද්‍ය වේදිකාව'
+  },
+  {
     id: 'foreign-patient-platform',
     name: 'විදේශීය රෝගී වේදිකාව',
     title: 'ගෝලීය රෝගීන් සඳහා ඒකාබද්ධ සේවාව',
@@ -40,8 +73,8 @@ export const SI_TECH: TechContent = {
   blockchainFeatures: ['දත්ත සුරක්ෂිතතාවය', 'විනිවිදභාවය', 'රෝගීන්ගේ අයිතිය'],
   bottomTitle: 'අඛණ්ඩ තාක්ෂණික විකාශනය',
   bottomDescription: 'අපි නිරවද්‍ය වෛද්‍ය විද්‍යාව සඳහා ගෝලීය ප්‍රමිතීන් සකසන්නෙමු.',
-  stat1Value: '15+',
-  stat1Label: 'පේටන්ට් බලපත්‍ර',
+  stat1Value: '2+',
+  stat1Label: 'පේටන්ට් බලපත්‍ර අයදුම්පත්',
   stat2Value: '24/7',
   stat2Label: 'පද්ධති අධීක්ෂණය'
 };
@@ -53,7 +86,7 @@ export const SI_PARTNERS: Partner[] = [
     type: 'Institution',
     description: 'සමස්ත කොරියාව පුරා පුළුල් සෞඛ්‍ය පරීක්ෂණ සේවා සපයන ප්‍රමුඛතම ආයතනයකි.',
     scope: 'AI සෞඛ්‍ය පරීක්ෂණ දත්ත විශ්ලේෂණය සහ වැළැක්වීමේ වෛද්‍ය විද්‍යාව',
-    imageUrl: 'https://picsum.photos/seed/kmi/400/300',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800',
     status: 'ක්‍රියාකාරී සහකරු'
   },
   {
@@ -73,7 +106,7 @@ export const SI_CONTACT: ContactContent = {
   email: 'info@medicalohub.com',
   emailDescription: 'වැදගත් කරුණු සඳහා කරුණාකර අපට කෙලින්ම විද්‍යුත් තැපෑලක් එවන්න.',
   addressTitle: 'ප්‍රධාන කාර්යාලය',
-  address: 'Teheran-ro, Gangnam-gu, සෝල්, දකුණු කොරියාව',
+  address: 'Rm 101, 1F, 154-29, Imbangul-daero, Gwangsan-gu, Gwangju, දකුණු කොරියාව',
   formName: 'නම / සම්බන්ධීකරණ පුද්ගලයා',
   formEmail: 'විද්‍යුත් තැපැල් ලිපිනය',
   formSubject: 'විමසීමේ මාතෘකාව',

@@ -17,117 +17,85 @@ const Technology: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[400px] md:h-[500px] flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070" 
-            alt="Advanced Technology" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-primary/40 mix-blend-multiply"></div>
-          <div className="absolute inset-0 bg-slate-900/80"></div>
-          <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#13a4ec 0.5px, transparent 0.5px)', backgroundSize: '20px 20px' }}></div>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 lg:px-20 w-full relative z-10 text-white">
-          <span className="inline-block px-4 py-1.5 bg-primary/20 backdrop-blur-md text-primary-light text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-6 border border-primary/30">Next-Gen Tech Stack</span>
-          <h1 className="text-4xl md:text-5xl xl:text-[68px] font-black leading-[1.1] tracking-tight mb-4">{content.heroTitle}</h1>
-          <p className="text-xl text-slate-200 font-light max-w-2xl leading-relaxed">
+    <div className="bg-white min-h-screen pt-32">
+      {/* Hero */}
+      <section className="px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-40">
+        <div className="animate-fade-up">
+          <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-primary/20 block mb-8">Technical Excellence</span>
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-primary mb-12 leading-[0.85]">
+            {content.heroTitle.split(' ').map((w, i) => (
+              <span key={i} className="block">{w}</span>
+            ))}
+          </h1>
+          <p className="text-xl text-primary/50 font-light leading-relaxed mb-16 max-w-md">
             {content.heroDescription}
           </p>
+          <div className="flex gap-16 border-t border-slate-100 pt-12">
+             <div>
+               <p className="text-5xl font-black text-primary mb-1 tracking-tighter">{content.stat1Value}</p>
+               <p className="text-[10px] font-bold text-primary/30 uppercase tracking-widest">{content.stat1Label}</p>
+             </div>
+             <div>
+               <p className="text-5xl font-black text-primary mb-1 tracking-tighter">{content.stat2Value}</p>
+               <p className="text-[10px] font-bold text-primary/30 uppercase tracking-widest">{content.stat2Label}</p>
+             </div>
+          </div>
+        </div>
+        
+        <div className="animate-reveal-img rounded-[60px] overflow-hidden aspect-[4/5] bg-bg-soft">
+           <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=1200" alt="Tech" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000" />
         </div>
       </section>
 
-      {/* Intro Section */}
-      <section className="py-24 px-6 bg-white dark:bg-background-dark">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-block p-4 bg-primary/5 rounded-3xl mb-8">
-            <span className="material-symbols-outlined text-6xl text-primary animate-pulse">memory</span>
-          </div>
-          <h2 className="text-3xl font-bold mb-6 dark:text-white">{content.sectionTitle}</h2>
-          <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-body">
-            {content.sectionDescription}
-          </p>
+      {/* Philosophy */}
+      <section className="py-40 px-6 bg-bg-soft text-center">
+        <div className="max-w-4xl mx-auto animate-fade-up">
+           <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-primary/20 block mb-10">Philosophy</span>
+           <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-primary mb-12 leading-none">{content.sectionTitle}</h2>
+           <p className="text-lg md:text-xl text-primary/40 leading-relaxed font-light">
+             {content.sectionDescription}
+           </p>
         </div>
       </section>
 
-      {/* Detailed Technology Sections */}
-      <section className="py-20 px-6 bg-slate-50 dark:bg-surface-dark/30">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold dark:text-white">{content.coreInnovations}</h2>
-            <div className="h-1.5 w-20 bg-primary mx-auto mt-4 rounded-full"></div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {/* AI Card */}
-            <div className="group bg-white dark:bg-surface-dark p-10 rounded-[40px] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:border-primary/30 transition-all duration-500">
-              <div className="size-20 bg-primary/10 text-primary rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                <span className="material-symbols-outlined text-4xl">psychology</span>
+      {/* Innovation Cards */}
+      <section className="py-40 px-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+            <div className="group animate-fade-up">
+              <div className="aspect-square rounded-[60px] bg-bg-soft overflow-hidden mb-12">
+                 <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800" alt="AI" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 dark:text-white flex items-center gap-3">
-                {content.aiTitle} <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-md uppercase font-black">Deep Learning</span>
-              </h3>
-              <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-body text-lg">
+              <h3 className="text-4xl font-black text-primary mb-6 tracking-tighter">{content.aiTitle}</h3>
+              <p className="text-primary/40 leading-relaxed font-light text-lg mb-10">
                 {content.aiDescription}
               </p>
-              <ul className="mt-8 space-y-3">
-                {content.aiFeatures.map(item => (
-                  <li key={item} className="flex items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-300">
-                    <span className="material-symbols-outlined text-primary text-lg">verified</span> {item}
-                  </li>
+              <div className="space-y-4">
+                {content.aiFeatures.map(f => (
+                  <div key={f} className="flex items-center gap-4 text-sm font-bold border-b border-slate-100 pb-4 last:border-0">
+                    <span className="material-symbols-outlined text-accent text-lg">radio_button_checked</span>
+                    {f}
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
 
-            {/* Blockchain Card */}
-            <div className="group bg-white dark:bg-surface-dark p-10 rounded-[40px] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:border-primary/30 transition-all duration-500">
-              <div className="size-20 bg-primary/10 text-primary rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                <span className="material-symbols-outlined text-4xl">security</span>
+            <div className="group animate-fade-up reveal-delay-2">
+              <div className="aspect-square rounded-[60px] bg-bg-soft overflow-hidden mb-12">
+                 <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800" alt="Security" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" />
               </div>
-              <h3 className="text-2xl font-bold mb-4 dark:text-white flex items-center gap-3">
-                {content.blockchainTitle} <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-md uppercase font-black">Integrity</span>
-              </h3>
-              <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-body text-lg">
+              <h3 className="text-4xl font-black text-primary mb-6 tracking-tighter">{content.blockchainTitle}</h3>
+              <p className="text-primary/40 leading-relaxed font-light text-lg mb-10">
                 {content.blockchainDescription}
               </p>
-              <ul className="mt-8 space-y-3">
-                {content.blockchainFeatures.map(item => (
-                  <li key={item} className="flex items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-300">
-                    <span className="material-symbols-outlined text-primary text-lg">verified</span> {item}
-                  </li>
+              <div className="space-y-4">
+                {content.blockchainFeatures.map(f => (
+                  <div key={f} className="flex items-center gap-4 text-sm font-bold border-b border-slate-100 pb-4 last:border-0">
+                    <span className="material-symbols-outlined text-accent text-lg">radio_button_checked</span>
+                    {f}
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Bottom Visual */}
-      <section className="py-24 bg-white dark:bg-background-dark overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 items-center gap-16">
-          <div className="relative rounded-[40px] overflow-hidden shadow-2xl">
-            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1000" alt="Tech Infrastructure" className="w-full aspect-[4/3] object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent mix-blend-overlay"></div>
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold mb-6 dark:text-white">{content.bottomTitle}</h2>
-            <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-body mb-8">
-              {content.bottomDescription}
-            </p>
-            <div className="flex items-center gap-8">
-               <div className="text-center">
-                 <p className="text-3xl font-black text-primary">{content.stat1Value}</p>
-                 <p className="text-xs font-bold text-slate-400 uppercase mt-1">{content.stat1Label}</p>
-               </div>
-               <div className="h-10 w-px bg-slate-100 dark:bg-slate-800"></div>
-               <div className="text-center">
-                 <p className="text-3xl font-black text-primary">{content.stat2Value}</p>
-                 <p className="text-xs font-bold text-slate-400 uppercase mt-1">{content.stat2Label}</p>
-               </div>
-            </div>
-          </div>
         </div>
       </section>
     </div>

@@ -1,8 +1,5 @@
 {
   "name": "Medical Korea Systems",
   "description": "A comprehensive AI-powered healthcare platform providing personalized health solutions, medical concierge for foreign patients, and smart telemedicine diagnostics.",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ]
+  "requestFramePermissions": []
 }

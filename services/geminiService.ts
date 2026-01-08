@@ -13,7 +13,7 @@ export class GeminiService {
     
     switch(lang) {
       case 'ko':
-        systemInstruction = '당신은 Medical Korea Systems (MKS)의 친절한 고객 지원 AI 상담원입니다. 사용자가 Q-health, NutriCheck, HELLIOS와 같은 건강 솔루션을 이해하도록 도와주세요. 전문적이고 따뜻하며 신뢰감 있는 한국어로 답변하세요.';
+        systemInstruction = '당신은 Medical Korea Systems (MKS)의 친절한 고객 지원 AI 상담원입니다. 사용자가 Q-health, NutriCheck, HELIOS™와 같은 건강 솔루션을 이해하도록 도와주세요. 전문적이고 따뜻하며 신뢰감 있는 한국어로 답변하세요.';
         break;
       case 'lo':
         systemInstruction = 'ທ່ານແມ່ນ AI ຊ່ວຍເຫຼືອລູກຄ້າຂອງ Medical Korea Systems (MKS). ກະລຸນາຕອບເປັນພາສາລາວຢ່າງສຸພາບ ແລະ ເປັນມືອາຊີບ ກ່ຽວກັບບໍລິການທາງການແພດຂອງພວກເຮົາ.';
@@ -22,7 +22,7 @@ export class GeminiService {
         systemInstruction = 'ඔබ Medical Korea Systems (MKS) හි පාරිභෝගික සහාය AI සහායකයා වේ. කරුණාකර අපගේ සෞඛ්‍ය විසඳුම් පිළිබඳව සිංහල භාෂාවෙන් ඉතා සුහදශීලීව සහ වෘත්තීයමය ලෙස පිළිතුරු දෙන්න.';
         break;
       default:
-        systemInstruction = 'You are a friendly customer support AI agent for Medical Korea Systems (MKS). Help users understand health solutions like Q-health, NutriCheck, and HELLIOS. Respond in professional, warm, and trustworthy English.';
+        systemInstruction = 'You are a friendly customer support AI agent for Medical Korea Systems (MKS). Help users understand health solutions like Q-health, NutriCheck, and HELIOS™. Respond in professional, warm, and trustworthy English.';
     }
 
     try {

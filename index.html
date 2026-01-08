@@ -1,14 +1,14 @@
 
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Korea Systems - AI-Powered Health Solutions</title>
+    <title>Medical Korea Systems - AI-Powered Healthcare</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&family=Noto+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -18,26 +18,31 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#13a4ec",
-                        "primary-dark": "#0b8bc9",
-                        "background-light": "#f6f7f8",
-                        "background-dark": "#101c22",
-                        "surface-light": "#ffffff",
-                        "surface-dark": "#1a2c35",
-                        "text-main": "#0d171b",
-                        "text-muted": "#4c809a",
+                        "primary": "#121212", // ohora black
+                        "accent": "#002D5E", // Deep Medical Navy
+                        "bg-soft": "#F8F8F8",
+                        "border-light": "#E5E5E5",
+                        "text-muted": "#666666",
                     },
                     fontFamily: {
                         "display": ["Space Grotesk", "sans-serif"],
+                        "serif": ["Cormorant Garamond", "serif"],
                         "body": ["Noto Sans", "sans-serif"],
                     },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "2xl": "1rem",
-                        "full": "9999px"
+                    animation: {
+                        'fade-up': 'fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'reveal-img': 'revealImg 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                     },
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        revealImg: {
+                            '0%': { clipPath: 'inset(100% 0 0 0)' },
+                            '100%': { clipPath: 'inset(0 0 0 0)' },
+                        }
+                    }
                 },
             },
         }
@@ -45,9 +50,28 @@
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
-        body { font-family: 'Space Grotesk', 'Noto Sans', sans-serif; }
+        body { 
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #ffffff;
+            color: #121212;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .ohora-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .premium-shadow {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+        }
+        .premium-shadow:hover {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+        .reveal-delay-1 { animation-delay: 0.1s; }
+        .reveal-delay-2 { animation-delay: 0.2s; }
+        .reveal-delay-3 { animation-delay: 0.3s; }
     </style>
 <script type="importmap">
 {
@@ -61,7 +85,7 @@
 }
 </script>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-white transition-colors duration-200">
+<body class="min-h-screen">
     <div id="root"></div>
 </body>
 </html>

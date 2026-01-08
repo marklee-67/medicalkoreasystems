@@ -29,158 +29,107 @@ const Navbar: React.FC = () => {
     window.dispatchEvent(new Event('storage_updated'));
   };
 
-  const getLangLabel = (l: Language) => {
-    switch(l) {
-      case 'ko': return '한국어';
-      case 'en': return 'English';
-      case 'lo': return 'ລາວ';
-      case 'si': return 'සිංහල';
-      default: return 'Language';
-    }
-  };
-
   return (
-    <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled ? 'bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800' : 'bg-transparent'}`}>
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? 'py-4 ohora-glass' : 'py-8 bg-transparent'}`}>
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link to="/" className="flex items-center group">
-          <div className="flex items-center gap-1.5 bg-primary px-3 py-1.5 rounded-xl text-white shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">
-            <span className="material-symbols-outlined text-2xl font-bold">medical_services</span>
-            <span className="text-xl font-black tracking-tighter leading-none">MKS</span>
+          <div className="size-8 bg-primary rounded-full flex items-center justify-center text-white transition-transform group-hover:scale-110 shrink-0">
+            <span className="material-symbols-outlined text-lg font-bold">medical_services</span>
           </div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white ml-3 hidden sm:block">
-            Medical Korea Systems
-          </h1>
+          <span className="ml-3 text-xl font-black tracking-tighter text-primary whitespace-nowrap">Medical Korea Systems</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
-          <nav className="flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.path} 
-                to={link.path} 
-                className={`text-sm font-medium transition-colors ${location.pathname === link.path ? 'text-primary font-bold' : 'text-slate-600 dark:text-slate-300 hover:text-primary'}`}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
+        <nav className="hidden md:flex items-center gap-12">
+          {navLinks.map((link) => (
+            <Link 
+              key={link.path} 
+              to={link.path} 
+              className={`text-[11px] font-bold uppercase tracking-[0.2em] transition-all hover:text-accent ${location.pathname === link.path ? 'text-primary' : 'text-primary/40'}`}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </nav>
 
-          <div className="relative group pl-6 border-l border-slate-200 dark:border-slate-800 ml-2">
-            <button className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-primary transition-colors py-1.5 px-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-transparent hover:border-primary/20 shadow-sm">
-              <span className="material-symbols-outlined text-[20px]">language</span>
-              <span className="text-xs font-bold uppercase tracking-tight">{getLangLabel(lang)}</span>
-              <span className="material-symbols-outlined text-[16px] transition-transform group-hover:rotate-180">expand_more</span>
-            </button>
-            
-            <div className="absolute right-0 top-full mt-2 w-40 bg-white dark:bg-surface-dark border border-slate-100 dark:border-slate-800 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[60] translate-y-2 group-hover:translate-y-0">
-              <div className="p-1.5">
-                {(['ko', 'en', 'lo', 'si'] as Language[]).map(l => (
-                  <button 
-                    key={l}
-                    onClick={() => handleLanguageChange(l)}
-                    className={`w-full text-left px-4 py-2.5 text-xs font-bold transition-all hover:bg-slate-50 dark:hover:bg-slate-800/50 rounded-xl flex items-center justify-between ${lang === l ? 'text-primary bg-primary/5' : 'text-slate-600 dark:text-slate-300'}`}
-                  >
-                    {getLangLabel(l)}
-                    {lang === l && <span className="material-symbols-outlined text-[16px]">check</span>}
-                  </button>
-                ))}
+        <div className="flex items-center gap-6">
+           <div className="relative group">
+              <button className="flex items-center gap-2 text-primary/60 hover:text-primary text-[10px] font-bold tracking-widest transition-all">
+                <span className="material-symbols-outlined text-lg">language</span>
+                {lang.toUpperCase()}
+              </button>
+              <div className="absolute right-0 top-full mt-2 w-32 bg-white border border-slate-100 shadow-xl rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden">
+                  {(['ko', 'en', 'lo', 'si'] as Language[]).map(l => (
+                    <button 
+                      key={l}
+                      onClick={() => handleLanguageChange(l)}
+                      className={`w-full text-left px-4 py-3 text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-slate-50 ${lang === l ? 'text-accent' : 'text-primary/40'}`}
+                    >
+                      {l}
+                    </button>
+                  ))}
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4 md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-slate-600 dark:text-slate-300 p-2">
-            <span className="material-symbols-outlined">{isOpen ? 'close' : 'menu'}</span>
-          </button>
+           </div>
+           <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-primary">
+              <span className="material-symbols-outlined">{isOpen ? 'close' : 'menu'}</span>
+           </button>
         </div>
       </div>
 
       {isOpen && (
-        <div className="md:hidden bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 px-6 py-6 flex flex-col gap-5 animate-in slide-in-from-top duration-300 shadow-xl">
-          {navLinks.map((link) => (
-            <Link key={link.path} to={link.path} onClick={() => setIsOpen(false)} className={`text-lg font-bold ${location.pathname === link.path ? 'text-primary' : 'dark:text-white'}`}>
-              {link.name}
-            </Link>
-          ))}
-          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-3">
-             <div className="grid grid-cols-2 gap-2">
-              {(['ko', 'en', 'lo', 'si'] as Language[]).map(l => (
-                <button 
-                  key={l}
-                  onClick={() => { handleLanguageChange(l); setIsOpen(false); }} 
-                  className={`py-3 rounded-xl font-bold text-sm transition-all border ${lang === l ? 'bg-primary text-white border-primary' : 'bg-slate-50 dark:bg-slate-800 text-slate-400 border-slate-100 dark:border-slate-700'}`}
-                >
-                  {getLangLabel(l)}
-                </button>
-              ))}
-            </div>
-          </div>
+        <div className="fixed inset-0 bg-white z-[90] md:hidden flex flex-col items-center justify-center p-8">
+           {navLinks.map((link) => (
+              <Link key={link.path} to={link.path} onClick={() => setIsOpen(false)} className="text-2xl font-black mb-8 hover:text-accent transition-colors uppercase tracking-tighter">
+                {link.name}
+              </Link>
+            ))}
+           <button onClick={() => setIsOpen(false)} className="mt-12 text-primary/40">
+              <span className="material-symbols-outlined text-4xl">close</span>
+           </button>
         </div>
       )}
     </header>
   );
 };
 
-// Footer remains as provided, using dynamic getters from constants.tsx
 const Footer: React.FC = () => {
-  const [dynamicServices, setDynamicServices] = useState([]);
   const [lang, setLang] = useState(getCurrentLang());
 
   useEffect(() => {
-    const update = () => {
-      import('../constants').then(m => {
-        setDynamicServices(m.getServices());
-        setLang(m.getCurrentLang());
-      });
-    };
-    update();
+    const update = () => setLang(getCurrentLang());
     window.addEventListener('storage_updated', update);
     return () => window.removeEventListener('storage_updated', update);
   }, []);
 
   const footerText = {
-    ko: { desc: 'AI 기반 건강 관리와 글로벌 의료 컨시어지 서비스를 통해 더 건강하고 스마트한 미래를 선도합니다.', intro: '회사 소개', sol: '솔루션', rights: '© 2024 Medical Korea Systems. All rights reserved.', privacy: '개인정보처리방침', terms: '이용약관', admin: '관리자 모드' },
-    en: { desc: 'Leading a healthier and smarter future through AI-based healthcare and global medical concierge services.', intro: 'About', sol: 'Solutions', rights: '© 2024 Medical Korea Systems. All rights reserved.', privacy: 'Privacy Policy', terms: 'Terms of Use', admin: 'Admin Mode' },
-    lo: { desc: 'ນໍາພາອະນາຄົດທີ່ສະຫຼາດກວ່າຜ່ານການເບິ່ງແຍງສຸຂະພາບດ້ວຍ AI.', intro: 'ກ່ຽວກັບ', sol: 'ໂຊລູຊັ່ນ', rights: '© 2024 Medical Korea Systems.', privacy: 'ນະໂຍບາຍ', terms: 'ເງື່ອນໄຂ', admin: 'ຜູ້ດູແລ' },
-    si: { desc: 'AI තාක්ෂණය හරහා සෞඛ්‍ය සම්පන්න අනාගතයක් නිර්මාණය කරමු.', intro: 'සමාගම', sol: 'විසඳුම්', rights: '© 2024 Medical Korea Systems.', privacy: 'පෞද්ගලිකත්වය', terms: 'කොන්දේසි', admin: 'පාලක' }
+    ko: { desc: 'AI 기반 건강 관리와 글로벌 의료 컨시어지 서비스를 통해 더 건강하고 스마트한 미래를 선도합니다.', rights: '© 2024 Medical Korea Systems. All rights reserved.' },
+    en: { desc: 'Leading a healthier and smarter future through AI-based healthcare and global medical concierge services.', rights: '© 2024 Medical Korea Systems. All rights reserved.' },
+    lo: { desc: 'ນໍາພາອະນາຄົດທີ່ສະຫຼາດກວ່າຜ່ານການເບິ່ງແຍງສຸຂະພາບດ້ວຍ AI.', rights: '© 2024 Medical Korea Systems.' },
+    si: { desc: 'AI තාක්ෂණය හරහා සෞඛ්‍ය සම්පන්න අනාගතයක් නිර්මාණය කරමු.', rights: '© 2024 Medical Korea Systems.' }
   }[lang];
 
   return (
-    <footer className="bg-white dark:bg-surface-dark border-t border-slate-100 dark:border-slate-800 py-16">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div className="col-span-1 md:col-span-2">
-          <div className="flex items-center gap-2 mb-6 text-slate-900 dark:text-white">
-            <div className="flex items-center gap-1.5 bg-primary px-3 py-1.5 rounded-xl text-white shadow-sm">
-              <span className="material-symbols-outlined text-xl font-bold">medical_services</span>
-              <span className="text-lg font-black tracking-tighter leading-none">MKS</span>
+    <footer className="py-24 px-6 border-t border-slate-100 bg-bg-soft">
+      <div className="max-w-7xl mx-auto text-center md:text-left grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+          <div className="flex items-center gap-3 mb-8 justify-center md:justify-start">
+            <div className="size-10 bg-primary rounded-full flex items-center justify-center text-white shrink-0">
+              <span className="material-symbols-outlined">medical_services</span>
             </div>
-            <span className="text-xl font-bold">Medical Korea Systems</span>
+            <span className="text-2xl font-black tracking-tighter">Medical Korea Systems</span>
           </div>
-          <p className="text-slate-500 dark:text-slate-400 max-w-sm mb-8 font-body leading-relaxed">
+          <p className="text-primary/50 max-w-md text-sm leading-relaxed">
             {footerText?.desc}
           </p>
         </div>
-        <div>
-          <h4 className="font-bold text-lg mb-6 text-slate-900 dark:text-white">{footerText?.intro}</h4>
-          <ul className="flex flex-col gap-4 text-slate-500 dark:text-slate-400 text-sm font-body">
-            <li><Link to="/admin/login" className="hover:text-primary transition-colors flex items-center gap-1.5"><span className="material-symbols-outlined text-sm">admin_panel_settings</span> {footerText?.admin}</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-bold text-lg mb-6 text-slate-900 dark:text-white">{footerText?.sol}</h4>
-          <ul className="flex flex-col gap-4 text-slate-500 dark:text-slate-400 text-sm font-body">
-            {dynamicServices.map(s => (
-              <li key={s.id}><Link to={`/service/${s.id}`} className="hover:text-primary transition-colors">{s.name}</Link></li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-slate-100 dark:border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400">
-        <p>{footerText?.rights}</p>
-        <div className="flex gap-8 items-center">
-          <a href="#" className="hover:text-primary transition-colors">{footerText?.privacy}</a>
-          <a href="#" className="hover:text-primary transition-colors">{footerText?.terms}</a>
+        <div className="flex flex-col items-center md:items-end gap-6">
+          <div className="flex gap-8">
+              <a href="#" className="text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:text-primary transition-colors">Privacy</a>
+              <a href="#" className="text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:text-primary transition-colors">Terms</a>
+              <Link to="/admin/login" className="text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:text-primary transition-colors">Admin</Link>
+          </div>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-primary/20">
+            {footerText?.rights}
+          </p>
         </div>
       </div>
     </footer>
@@ -200,11 +149,7 @@ const ChatBot: React.FC = () => {
       setLang(newLang);
       setChat([{ 
         role: 'model', 
-        text: newLang === 'ko' 
-          ? '안녕하세요! MKS AI 어시스턴트입니다. 저희의 건강 솔루션에 대해 궁금한 점이 있으신가요?' 
-          : newLang === 'lo' ? 'ສະບາຍດີ! ຂ້ອຍແມ່ນ AI ຂອງ MKS. ມີຫຍັງໃຫ້ຊ່ວຍບໍ່?' 
-          : newLang === 'si' ? 'ආයුබෝවන්! මම MKS AI සහායකයා. ඔබට උදව් කරන්නේ කෙසේද?'
-          : 'Hello! I am the MKS AI Assistant. How can I help you today?' 
+        text: newLang === 'ko' ? '무엇을 도와드릴까요?' : 'How can I help you today?' 
       }]);
     };
     updateLang();
@@ -227,56 +172,56 @@ const ChatBot: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100]">
+    <div className="fixed bottom-10 right-10 z-[100]">
       {!isOpen && (
         <button 
           onClick={() => setIsOpen(true)}
-          className="size-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform animate-bounce"
+          className="size-16 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform shadow-black/10"
         >
-          <span className="material-symbols-outlined text-2xl">chat</span>
+          <span className="material-symbols-outlined text-3xl">chat_bubble</span>
         </button>
       )}
 
       {isOpen && (
-        <div className="w-[350px] md:w-[400px] h-[500px] bg-white dark:bg-surface-dark rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 flex flex-col overflow-hidden animate-in slide-in-from-bottom-10">
-          <div className="p-4 bg-primary text-white flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined">support_agent</span>
-              <span className="font-bold">{lang === 'ko' ? 'MKS AI 고객지원' : 'MKS AI Support'}</span>
+        <div className="w-[350px] md:w-[400px] h-[550px] bg-white rounded-[32px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.2)] flex flex-col overflow-hidden animate-fade-up border border-slate-100">
+          <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <div className="size-8 bg-primary/5 text-primary rounded-full flex items-center justify-center">
+                <span className="material-symbols-outlined text-sm">auto_awesome</span>
+              </div>
+              <span className="font-bold text-xs uppercase tracking-widest text-primary/60">MKS Intelligence</span>
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 p-1 rounded">
-              <span className="material-symbols-outlined">close</span>
+            <button onClick={() => setIsOpen(false)} className="size-8 rounded-full hover:bg-slate-50 flex items-center justify-center transition-colors">
+              <span className="material-symbols-outlined text-lg">close</span>
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 no-scrollbar">
+          <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-6 no-scrollbar">
             {chat.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] px-4 py-2 rounded-2xl text-sm ${msg.role === 'user' ? 'bg-primary text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200'}`}>
+                <div className={`max-w-[85%] px-5 py-3 rounded-2xl text-sm leading-relaxed ${msg.role === 'user' ? 'bg-primary text-white' : 'bg-bg-soft text-primary/80 border border-slate-100'}`}>
                   {msg.text}
                 </div>
               </div>
             ))}
             {loading && (
-              <div className="flex justify-start">
-                <div className="bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-2xl text-sm flex gap-1">
-                   <div className="size-1.5 bg-slate-400 rounded-full animate-bounce"></div>
-                   <div className="size-1.5 bg-slate-400 rounded-full animate-bounce delay-100"></div>
-                   <div className="size-1.5 bg-slate-400 rounded-full animate-bounce delay-200"></div>
-                </div>
-              </div>
+               <div className="flex gap-1 p-2">
+                  <div className="size-1 bg-primary/20 rounded-full animate-bounce"></div>
+                  <div className="size-1 bg-primary/20 rounded-full animate-bounce delay-100"></div>
+                  <div className="size-1 bg-primary/20 rounded-full animate-bounce delay-200"></div>
+               </div>
             )}
           </div>
-          <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex gap-2">
+          <div className="p-6 bg-white border-t border-slate-100 flex gap-2">
             <input 
               type="text" 
               value={message} 
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              placeholder={lang === 'ko' ? '무엇이든 물어보세요...' : 'Ask anything...'}
-              className="flex-1 bg-slate-50 dark:bg-slate-900 border-none rounded-lg text-sm focus:ring-1 focus:ring-primary dark:text-white"
+              placeholder="Your message..."
+              className="flex-1 bg-bg-soft border-none rounded-xl text-sm focus:ring-1 focus:ring-primary text-primary placeholder:text-primary/20 px-4 h-12"
             />
-            <button onClick={handleSend} className="bg-primary text-white p-2 rounded-lg hover:bg-primary-dark transition-colors">
-              <span className="material-symbols-outlined text-xl">send</span>
+            <button onClick={handleSend} className="bg-primary text-white size-12 rounded-xl flex items-center justify-center hover:opacity-90 transition-all">
+              <span className="material-symbols-outlined">north</span>
             </button>
           </div>
         </div>

@@ -14,6 +14,39 @@ export const LO_SERVICES: Service[] = [
     category: 'AI ວິນິດໄສ'
   },
   {
+    id: 'nutricheck',
+    name: 'NutriCheck',
+    title: 'ການຈັດການອາຫານເສີມສ່ວນບຸກຄົນດ້ວຍ AI',
+    description: 'AI ວິເຄາະຜົນການກວດສຸຂະພາບເພື່ອແນະນໍາອາຫານເສີມທີ່ເໝາະສົມກັບທ່ານ ແລະ ບໍລິການແບບສະໝັກສະມາຊິກ.',
+    longDescription: 'NutriCheck ວິເຄາະຂໍ້ມູນສຸຂະພາບຕົວຈິງຂອງທ່ານເພື່ອຈັດສົ່ງອາຫານເສີມສ່ວນບຸກຄົນແບບລາຍເດືອນ ແລະ ມີລະບົບໃຫ້ຄະແນນລາງວັນສຳລັບການກິນຢ່າງຕໍ່ເນື່ອງ.',
+    icon: 'vaccines',
+    imageUrl: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=800',
+    features: ['ວິເຄາະຂໍ້ມູນກວດສຸຂະພາບດ້ວຍ AI', 'ສະໝັກສະມາຊິກອາຫານເສີມ (1/3/6 ເດືອນ)', 'ລະບົບລາງວັນຄະແນນ'],
+    category: 'ການຈັດການອາຫານ'
+  },
+  {
+    id: 'helios',
+    name: 'HELIOS™',
+    title: 'ການຄາດຄະເນການມາຢ້ຽມຢາມຜ່ານຂໍ້ມູນທີ່ບໍ່ມີໂຄງສ້າງ',
+    description: 'ໂຊລູຊັ່ນ AI ທີ່ວິເຄາະຂໍ້ມູນການປຶກສາທາງການແພດເພື່ອຄາດຄະເນຄວາມເປັນໄປໄດ້ໃນການມາຢ້ຽມຢາມ.',
+    longDescription: 'HELIOS™ ວິເຄາະຂໍ້ມູນທີ່ບໍ່ມີໂຄງສ້າງເຊັ່ນ: ຂໍ້ຄວາມ ແລະ ສຽງຈາກການປຶກສາຫາລື. ໂດຍການກໍານົດການປ່ຽນແປງທາງຈິດໃຈ ແລະ ຄວາມຕ້ອງການໃນເວລາທີ່ແທ້ຈິງ, ມັນຄາດຄະເນຄວາມເປັນໄປໄດ້ຂອງການໄປຢ້ຽມຢາມໂຮງຫມໍທາງວິທະຍາສາດ.',
+    icon: 'insights',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
+    features: ['ການຄາດຄະເນຄວາມເປັນໄປໄດ້', 'ການວິເຄາະອາລົມ', 'ຂໍ້ມູນການປຶກສາທາງການແພດ'],
+    category: 'AI ການປຶກສາ'
+  },
+  {
+    id: 'medi-bar',
+    name: 'ແພລດຟອມ Medi-bar',
+    title: 'ສູນກາງຂໍ້ມູນທາງການແພດ ແລະ ການບໍລິການແບບຄົບວົງຈອນ',
+    description: 'ແພລດຟອມອັດສະລິຍະທີ່ເຊື່ອມຕໍ່ໂຮງໝໍ, ຄົນເຈັບ ແລະ ຜູ້ບໍລິຫານ.',
+    longDescription: 'Medi-bar ເຮັດໃຫ້ຂໍ້ມູນທາງການແພດເປັນມາດຕະຖານ ແລະ ເຊື່ອມຕໍ່ກັບເຄື່ອງຈັກ MKS AI ເພື່ອໃຫ້ຄວາມຮູ້ດ້ານສຸຂະພາບໃນເວລາຈິງ ແລະ ເຄື່ອງມືວິນິດໄສທີ່ຊັດເຈນ.',
+    icon: 'hub',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800',
+    features: ['ມາດຕະຖານຂໍ້ມູນສາກົນ', 'ການເຊື່ອມຕໍ່ AI API', 'ການຈັດການຂໍ້ມູນ'],
+    category: 'ແພລດຟອມການແພດ'
+  },
+  {
     id: 'foreign-patient-platform',
     name: 'ແພລດຟອມຄົນເຈັບຕ່າງປະເທດ',
     title: 'ການບໍລິການຄົບວົງຈອນສຳລັບຄົນເຈັບທົ່ວໂລກ',
@@ -34,14 +67,14 @@ export const LO_TECH: TechContent = {
   coreInnovations: 'ນະວັດຕະກໍາຫຼັກ',
   aiTitle: 'ປັນຍາປະດິດ',
   aiDescription: 'ເຄື່ອງຈັກ AI ຂອງພວກເຮົາວິເຄາະຂໍ້ມູນທາງການແພດທີ່ມີໂຄງສ້າງ ແລະ ບໍ່ມີໂຄງສ້າງດ້ວຍຄວາມຊັດເຈນ 99%.',
-  aiFeatures: ['ການຄາດຄະເນພະຍາດດ້ວຍ AI', 'ການວິເຄາະສຽງ Biomarker', 'ຄວາມຊັດເຈນສູງ'],
+  aiFeatures: ['ການຄາດຄເນພະຍາດດ້ວຍ AI', 'ການວິເຄາະສຽງ Biomarker', 'ຄວາມຊັດເຈນສູງ'],
   blockchainTitle: 'ບລັອກເຊນ',
   blockchainDescription: 'ຄວາມປອດໄພຂອງຂໍ້ມູນແມ່ນພື້ນຖານ. MKS ນໍາໃຊ້ບລັອກເຊນເພື່ອປົກປ້ອງຂໍ້ມູນສຸຂະພາບ.',
   blockchainFeatures: ['ຄວາມປອດໄພຂໍ້ມູນສູງ', 'ຄວາມໂປ່ງໃສ', 'ການປົກປ້ອງຂໍ້ມູນຄົນເຈັບ'],
   bottomTitle: 'ວິວັດທະນາການເຕັກໂນໂລຊີຢ່າງຕໍ່ເນື່ອງ',
   bottomDescription: 'ພວກເຮົາກຳລັງສ້າງມາດຕະຖານໂລກສຳລັບການແພດທີ່ຊັດເຈນ.',
-  stat1Value: '15+',
-  stat1Label: 'ສິດທິບັດ',
+  stat1Value: '2+',
+  stat1Label: 'ຄຳຮ້ອງຂໍສິດທິບັດ',
   stat2Value: '24/7',
   stat2Label: 'ການຕິດຕາມລະບົບ'
 };
@@ -53,7 +86,7 @@ export const LO_PARTNERS: Partner[] = [
     type: 'Institution',
     description: 'ສະຖາບັນກວດສຸຂະພາບຊັ້ນນຳທີ່ໃຫ້ບໍລິການຄົບວົງຈອນທົ່ວປະເທດເກົາຫຼີ.',
     scope: 'ການວິເຄາະຂໍ້ມູນການກວດສຸຂະພາບດ້ວຍ AI ແລະ ການແພດປ້ອງກັນ',
-    imageUrl: 'https://picsum.photos/seed/kmi/400/300',
+    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800',
     status: 'ຄູ່ຮ່ວມງານທີ່ເຄື່ອນໄຫວ'
   },
   {
@@ -73,11 +106,11 @@ export const LO_CONTACT: ContactContent = {
   email: 'info@medicalohub.com',
   emailDescription: 'ສຳລັບເລື່ອງທີ່ລະອຽດອ່ອນ, ກະລຸນາສົ່ງອີເມວຫາພວກເຮົາໂດຍກົງ.',
   addressTitle: 'ສໍານັກງານໃຫຍ່',
-  address: 'Teheran-ro, Gangnam-gu, ໂຊນ, ສ ເກົາຫຼີ',
+  address: '101, 1F, 154-29, Imbangul-daero, Gwangsan-gu, Gwangju, ສ ເົາຫຼີ',
   formName: 'ຊື່ / ຜູ້ຕິດຕໍ່',
   formEmail: 'ທີ່ຢູ່ອີເມວ',
   formSubject: 'ຫົວຂໍ້ການສອບຖາມ',
   formContent: 'ເນື້ອໃນລະອຽດ',
   formSubmit: 'ສົ່ງການສອບຖາມ',
-  formPrivacy: 'ຂ້ອຍຍອມຮັບການເກັບກຳ ແລະ ນໍາໃຊ້ຂໍ້ມູນສ່ວນຕົວ.'
+  formPrivacy: 'ຂ້ອຍຍອමຮັບການເກັບກຳ ແລະ ນໍາໃຊ້ຂໍ້ມູນສ່ວນຕົວ.'
 };
