@@ -20,6 +20,19 @@ const Partnership: React.FC = () => {
 
   const t = UI_TEXT[lang].partnership;
 
+  const getPartnerTypeLabel = (type: string) => {
+    if (type === 'Institution') return t.typeInst;
+    if (type === 'Business') return t.typeBiz;
+    return type;
+  };
+
+  const getPartnerStatusLabel = (status: string | undefined) => {
+    if (!status) return '';
+    // 만약 데이터에 "활성 파트너" 또는 "Active Partner" 등이 들어있으면 변환
+    if (status.toLowerCase().includes('active') || status.includes('활성')) return t.statusActive;
+    return status;
+  };
+
   return (
     <div className="bg-white min-h-screen pt-32">
       {/* Hero Section */}
@@ -37,11 +50,11 @@ const Partnership: React.FC = () => {
           <div className="flex gap-16 border-t border-slate-100 pt-12">
              <div>
                <p className="text-5xl font-black text-primary mb-1 tracking-tighter">{partners.length}+</p>
-               <p className="text-[10px] font-bold text-primary/30 uppercase tracking-widest">{lang === 'ko' ? '글로벌 파트너' : 'Global Partners'}</p>
+               <p className="text-[10px] font-bold text-primary/30 uppercase tracking-widest">{lang === 'ko' ? '글로벌 파트너' : lang === 'si' ? 'ගෝලීය හවුල්කරුවන්' : lang === 'lo' ? 'ຄູ່ຮ່ວມງານທົ່ວໂລກ' : 'Global Partners'}</p>
              </div>
              <div>
                <p className="text-5xl font-black text-primary mb-1 tracking-tighter">5+</p>
-               <p className="text-[10px] font-bold text-primary/30 uppercase tracking-widest">{lang === 'ko' ? '협력 국가' : 'Partner Countries'}</p>
+               <p className="text-[10px] font-bold text-primary/30 uppercase tracking-widest">{lang === 'ko' ? '협력 국가' : lang === 'si' ? 'හවුල්කාර රටවල්' : lang === 'lo' ? 'ປະເທດຄູ່ຮ່ວມງານ' : 'Partner Countries'}</p>
              </div>
           </div>
         </div>
@@ -60,12 +73,10 @@ const Partnership: React.FC = () => {
         <div className="max-w-4xl mx-auto animate-fade-up">
            <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-primary/20 block mb-10">Our Vision</span>
            <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-primary mb-12 leading-none">
-             {lang === 'ko' ? '함께 만드는 미래 의료' : 'Shaping Future Healthcare Together'}
+             {t.visionTitle}
            </h2>
            <p className="text-lg md:text-xl text-primary/40 leading-relaxed font-light">
-             {lang === 'ko' 
-               ? 'MKS는 신뢰할 수 있는 파트너들과 함께 의료 데이터의 가치를 재발견하고, 환자 중심의 혁신적인 생태계를 구축해 나갑니다.' 
-               : 'Together with trusted partners, MKS rediscovers the value of medical data and builds an innovative patient-centered ecosystem.'}
+             {t.visionDesc}
            </p>
         </div>
       </section>
@@ -90,10 +101,12 @@ const Partnership: React.FC = () => {
               )}
               <div className="flex justify-between items-start mb-6">
                  <div>
-                    <span className="text-[10px] font-bold text-accent uppercase tracking-widest block mb-2">{partner.type}</span>
+                    <span className="text-[10px] font-bold text-accent uppercase tracking-widest block mb-2">{getPartnerTypeLabel(partner.type)}</span>
                     <h3 className="text-4xl font-black text-primary tracking-tighter">{partner.name}</h3>
                  </div>
-                 <span className="text-[10px] px-3 py-1 border border-slate-100 rounded-full text-primary/30 font-bold uppercase tracking-widest">{partner.status}</span>
+                 <span className="text-[10px] px-3 py-1 border border-slate-100 rounded-full text-primary/30 font-bold uppercase tracking-widest">
+                    {getPartnerStatusLabel(partner.status)}
+                 </span>
               </div>
               <p className="text-primary/40 leading-relaxed font-light text-lg mb-10">
                 {partner.description}
@@ -114,15 +127,15 @@ const Partnership: React.FC = () => {
       <section className="py-40 px-6 text-center border-t border-slate-50">
          <div className="max-w-4xl mx-auto animate-fade-up">
             <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-primary mb-12">
-              {lang === 'ko' ? '새로운 혁신 파트너를 찾습니다' : 'Join Our Global Network'}
+              {lang === 'ko' ? '새로운 혁신 파트너를 찾습니다' : lang === 'si' ? 'අපි නව නවෝත්පාදන හවුල්කරුවන් සොයමු' : lang === 'lo' ? 'ພວກເຮົາກຳລັງຊອກຫາຄູ່ຮ່ວມງານນະວັດຕະກໍາໃໝ່' : 'Join Our Global Network'}
             </h2>
             <p className="text-xl text-primary/40 mb-16 max-w-2xl mx-auto font-light leading-relaxed">
               {lang === 'ko' 
                 ? '의료 서비스의 디지털 전환을 함께 이끌어갈 병원 및 기업의 참여를 기다립니다.' 
-                : 'We invite hospitals and companies to join us in leading the digital transformation of medical services.'}
+                : lang === 'si' ? 'වෛද්‍ය සේවාවල ඩිජිටල් පරිවර්තනය මෙහෙයවීමට රෝහල් සහ සමාගම්වල සහභාගීත්වය අපි බලාපොරොත්තු වෙමු.' : lang === 'lo' ? 'ພວກເຮົາລໍຖ້າການມີສ່ວນຮ່ວມຂອງໂຮງໝໍ ແລະ ບໍລິສັດທີ່ຈະຮ່ວມກັນນຳພາການຫັນເປັນດິຈິຕອນຂອງການບໍລິການທາງການແພດ.' : 'We invite hospitals and companies to join us in leading the digital transformation of medical services.'}
             </p>
             <Link to="/contact" className="inline-flex h-20 px-16 bg-primary text-white font-bold uppercase tracking-[0.2em] text-[12px] rounded-full shadow-2xl shadow-black/10 hover:opacity-90 transition-all items-center justify-center">
-              {lang === 'ko' ? '파트너십 제안하기' : 'Propose Partnership'}
+              {lang === 'ko' ? '파트너십 제안하기' : lang === 'si' ? 'හවුල්කාරිත්වය යෝජනා කරන්න' : lang === 'lo' ? 'ສະເໜີການຮ່ວມມື' : 'Propose Partnership'}
             </Link>
          </div>
       </section>

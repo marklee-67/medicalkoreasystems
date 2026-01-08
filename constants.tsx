@@ -117,7 +117,12 @@ export const UI_TEXT = {
     partnership: {
         title: '글로벌 파트너십',
         desc: '국내의 유수의 의료기관 및 기업들과 함께 혁신적인 생태계를 구축하고 있습니다.',
-        scope: '협력 범위'
+        scope: '협력 범위',
+        visionTitle: '함께 만드는 미래 의료',
+        visionDesc: 'MKS는 신뢰할 수 있는 파트너들과 함께 의료 데이터의 가치를 재발견하고, 환자 중심의 혁신적인 생태계를 구축해 나갑니다.',
+        typeInst: '의료 기관',
+        typeBiz: '일반 기업',
+        statusActive: '활성 파트너'
     },
     serviceDetail: {
         preparing: '서비스 준비 중',
@@ -151,7 +156,12 @@ export const UI_TEXT = {
     partnership: {
         title: 'Global Partnership',
         desc: 'We are building an innovative ecosystem with leading medical institutions and companies.',
-        scope: 'Scope of Cooperation'
+        scope: 'Scope of Cooperation',
+        visionTitle: 'Shaping Future Healthcare Together',
+        visionDesc: 'Together with trusted partners, MKS rediscovers the value of medical data and builds an innovative patient-centered ecosystem.',
+        typeInst: 'Institution',
+        typeBiz: 'Business',
+        statusActive: 'Active Partner'
     },
     serviceDetail: {
         preparing: 'Service in Progress',
@@ -185,7 +195,12 @@ export const UI_TEXT = {
     partnership: {
         title: 'ການຮ່ວມມືທົ່ວໂລກ',
         desc: 'ພວກເຮົາກຳລັງສ້າງລະບົບນິເວດນະວັດຕະກໍາກັບສະຖາບັນການແພດ ແລະ ບໍລິສັດຊັ້ນນຳ.',
-        scope: 'ຂອບເຂດການຮ່ວມມື'
+        scope: 'ຂອບເຂດການຮ່ວມມື',
+        visionTitle: 'ຮ່ວມກັນສ້າງອະນາຄົດການແພດ',
+        visionDesc: 'MKS ຮ່ວມກັບຄູ່ຮ່ວມງານທີ່ເຊື່ອຖືໄດ້ ຄົ້ນພົບຄຸນຄ່າຂອງຂໍ້ມູນທາງການແພດ ແລະ ສ້າງລະບົບນິເວດທີ່ເນັ້ນຄົນເຈັບເປັນສູນກາງ.',
+        typeInst: 'ສະຖາບັນ',
+        typeBiz: 'ທຸລະກິດ',
+        statusActive: 'ຄູ່ຮ່ວມງານທີ່ເຄື່ອນໄຫວ'
     },
     serviceDetail: {
         preparing: 'ກຳລັງກຽມພ້ອມ',
@@ -219,7 +234,12 @@ export const UI_TEXT = {
     partnership: {
         title: 'ගෝලීය හවුල්කාරිත්වය',
         desc: 'අපි ප්‍රමුඛ වෛද්‍ය ආයතන සහ සමාගම් සමඟ නව්‍ය පරිසර පද්ධතියක් ගොඩනඟමු.',
-        scope: 'සහයෝගීතාවයේ විෂය පථය'
+        scope: 'සහයෝගීතාවයේ විෂය පථය',
+        visionTitle: 'අනාගත සෞඛ්‍ය සේවාව එක්ව හැඩගැස්වීම',
+        visionDesc: 'විශ්වාසවන්ත හවුල්කරුවන් සමඟ එක්ව, MKS වෛද්‍ය දත්තවල වටිනාකම නැවත සොයා ගන්නා අතර නව්‍ය රෝගී කේන්ද්‍රීය පරිසර පද්ධතියක් ගොඩනඟයි.',
+        typeInst: 'ආයතනය',
+        typeBiz: 'ව්‍යාපාරය',
+        statusActive: 'සක්‍රීය හවුල්කරු'
     },
     serviceDetail: {
         preparing: 'සේවාව සූදානම් වෙමින් පවතී',

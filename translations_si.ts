@@ -87,7 +87,7 @@ export const SI_PARTNERS: Partner[] = [
     description: 'සමස්ත කොරියාව පුරා පුළුල් සෞඛ්‍ය පරීක්ෂණ සේවා සපයන ප්‍රමුඛතම ආයතනයකි.',
     scope: 'AI සෞඛ්‍ය පරීක්ෂණ දත්ත විශ්ලේෂණය සහ වැළැක්වීමේ වෛද්‍ය විද්‍යාව',
     imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=800',
-    status: 'ක්‍රියාකාරී සහකරු'
+    status: 'සක්‍රීය හවුල්කරු'
   },
   {
     id: 'sunhan-hospital',
@@ -96,7 +96,7 @@ export const SI_PARTNERS: Partner[] = [
     description: 'ප්‍රජා සෞඛ්‍යය වෙනුවෙන් කැපවී සිටින, MKS AI විසඳුම් සායනික ක්ෂේත්‍රයට හඳුන්වා දුන් රෝහලකි.',
     scope: 'AI පාදක රෝගී පුරෝකථනය සහ ස්මාර්ට් වාට්ටු පද්ධති ගොඩනැගීම',
     imageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=400',
-    status: 'ක්‍රියාකාරී සහකරු'
+    status: 'සක්‍රීය හවුල්කරු'
   }
 ];
 
