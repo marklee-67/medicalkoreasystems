@@ -123,9 +123,9 @@ const Footer: React.FC = () => {
         </div>
         <div className="flex flex-col items-center md:items-end gap-6">
           <div className="flex gap-8">
-              <a href="#" className="text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:text-primary transition-colors">Privacy</a>
-              <a href="#" className="text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:text-primary transition-colors">Terms</a>
-              <Link to="/admin/login" className="text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:text-primary transition-colors">Admin</Link>
+              <Link to="/privacy" className="text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:text-primary transition-colors">개인정보처리방침</Link>
+              <Link to="/terms" className="text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:text-primary transition-colors">이용약관</Link>
+              <Link to="/admin/login" className="text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:text-primary transition-colors">관리자</Link>
           </div>
           <p className="text-[10px] uppercase tracking-[0.2em] text-primary/20">
             {footerText?.rights}

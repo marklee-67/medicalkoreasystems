@@ -108,11 +108,11 @@ const AdminDashboard: React.FC = () => {
       <main className="flex-1 p-8 lg:p-12 overflow-y-auto no-scrollbar">
         <header className="mb-10 flex justify-between items-end">
           <div>
-            <h1 className="text-3xl font-black dark:text-white capitalize">{activeTab} Management</h1>
+            <h1 className="text-3xl font-black dark:text-white">문의 내역 관리</h1>
             <p className="text-slate-500 mt-1">사이트의 각 섹션 내용을 실시간으로 수정하고 관리하세요.</p>
           </div>
           <div className="text-xs font-bold text-slate-400 bg-white dark:bg-slate-800 px-3 py-1.5 rounded-full border border-slate-100 dark:border-slate-700">
-            Current Tab: <span className="text-primary">{activeTab.toUpperCase()}</span>
+            현재 탭: <span className="text-primary">문의 내역</span>
           </div>
         </header>
 
@@ -171,7 +171,7 @@ const AdminDashboard: React.FC = () => {
               <div className="bg-white dark:bg-surface-dark p-8 rounded-3xl border border-primary/20 shadow-xl animate-fade-up">
                 <div className="flex justify-between items-start mb-6">
                   <div>
-                    <span className="text-[10px] font-black uppercase text-primary tracking-widest mb-1 block">Inquiry Management Console</span>
+                    <span className="text-[10px] font-black uppercase text-primary tracking-widest mb-1 block">문의 내역 관리 콘솔</span>
                     <h3 className="text-2xl font-bold dark:text-white">{viewingInquiry.subject}</h3>
                     <p className="text-xs text-slate-400 mt-1">{viewingInquiry.date} | {viewingInquiry.name} ({viewingInquiry.email})</p>
                   </div>
@@ -191,13 +191,13 @@ const AdminDashboard: React.FC = () => {
                 {showSource ? (
                   <div className="relative group">
                     <pre className="bg-slate-900 text-slate-300 p-6 rounded-2xl text-xs font-mono overflow-x-auto border border-slate-800 leading-relaxed max-h-[400px]">
-                      {viewingInquiry.tsCode || '// No source code available for this entry.'}
+                      {viewingInquiry.tsCode || '// 해당 항목의 소스 코드를 불러올 수 없습니다.'}
                     </pre>
                     <button 
                       onClick={() => copyToClipboard(viewingInquiry.tsCode || '')}
                       className="absolute top-4 right-4 px-3 py-1.5 bg-white/10 text-white text-[10px] font-bold rounded-md hover:bg-white/20 transition-all"
                     >
-                      Copy TS Code
+                      코드 복사
                     </button>
                   </div>
                 ) : (
