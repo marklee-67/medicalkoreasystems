@@ -69,4 +69,5 @@ export interface Inquiry {
   subject: string;
   content: string;
   date: string;
+  tsCode?: string; // 프로젝트 파일 형식으로 생성된 소스 코드 저장
 }

@@ -30,43 +30,40 @@ const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const timestamp = new Date().toLocaleString();
+    const now = new Date();
+    const timestamp = now.toLocaleString();
+    const fileId = now.getTime();
     
+    // 1. 언어 파일(translations_en.ts 등)과 동일한 형식의 소스 코드 미리 생성
+    const tsCode = `
+/**
+ * Medical Korea Systems - Inquiry Data File (Generated)
+ * Location: /src/inquiries/inquiry_${fileId}.ts
+ */
+export const INQUIRY_${fileId} = {
+  id: "${String(fileId)}",
+  name: "${formData.name.replace(/"/g, '\\"')}",
+  email: "${formData.email.replace(/"/g, '\\"')}",
+  subject: "${formData.subject.replace(/"/g, '\\"')}",
+  date: "${timestamp}",
+  content: \`${formData.content.replace(/`/g, '\\`')}\`
+};`.trim();
+
     const newInquiry: Inquiry = {
-      id: String(Date.now()),
+      id: String(fileId),
       name: formData.name,
       email: formData.email,
       subject: formData.subject,
       content: formData.content,
-      date: timestamp
+      date: timestamp,
+      tsCode: tsCode // 생성된 코드를 데이터와 함께 저장
     };
+
+    // 2. 관리자 대시보드에서 즉시 확인 가능하도록 내부 저장소에 기록
     const currentInquiries = getInquiries();
     saveInquiries([newInquiry, ...currentInquiries]);
 
-    const fileContent = `
-[Medical Korea Systems - ${lang === 'ko' ? '문의 접수 내역' : 'Inquiry Details'}]
-${lang === 'ko' ? '접수 일시' : 'Date'}: ${timestamp}
----------------------------------------
-${content.formName}: ${formData.name}
-${content.formEmail}: ${formData.email}
-${content.formSubject}: ${formData.subject}
-
-${content.formContent}:
-${formData.content}
----------------------------------------
-    `.trim();
-
-    const blob = new Blob([fileContent], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    const fileName = `MKS_Inquiry_${formData.name}_${new Date().toISOString().split('T')[0]}.txt`;
-    link.href = url;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
+    // UI 상태 업데이트
     setIsSubmitted(true);
     setFormData({ name: '', email: '', subject: '', content: '' });
     setTimeout(() => setIsSubmitted(false), 5000);
@@ -74,7 +71,7 @@ ${formData.content}
 
   return (
     <div className="bg-white min-h-screen pt-32">
-      {/* Hero Section - Split Layout matched with Partnership page */}
+      {/* Hero Section */}
       <section className="px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-40">
         <div className="animate-fade-up">
           <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-primary/20 block mb-8">Support & Connect</span>
@@ -107,7 +104,7 @@ ${formData.content}
         </div>
       </section>
 
-      {/* Communication Philosophy */}
+      {/* Philosophy Section */}
       <section className="py-40 px-6 bg-bg-soft text-center">
         <div className="max-w-4xl mx-auto animate-fade-up">
            <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-primary/20 block mb-10">Philosophy</span>
@@ -122,11 +119,10 @@ ${formData.content}
         </div>
       </section>
 
-      {/* Contact Channels Grid */}
+      {/* Contact Form Section */}
       <section className="py-40 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
           
-          {/* Direct Info Block */}
           <div className="animate-fade-up">
             <h3 className="text-4xl font-black text-primary mb-10 tracking-tighter">{lang === 'ko' ? '직접 문의' : 'Direct Channels'}</h3>
             
@@ -153,7 +149,6 @@ ${formData.content}
             </div>
           </div>
 
-          {/* Form Block */}
           <div className="animate-fade-up reveal-delay-1">
             <h3 className="text-4xl font-black text-primary mb-10 tracking-tighter">{lang === 'ko' ? '상담 메시지' : 'Message Us'}</h3>
             

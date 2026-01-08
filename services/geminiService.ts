@@ -2,13 +2,16 @@
 import { GoogleGenAI } from "@google/genai";
 
 export class GeminiService {
-  private ai: GoogleGenAI;
-
-  constructor() {
-    this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-  }
-
+  /**
+   * Sends a message to the Gemini AI and returns the response text.
+   * Following SDK rules:
+   * - Initialize GoogleGenAI within the call to ensure fresh API key usage.
+   * - Access the .text property of the response directly.
+   */
   async chat(message: string, history: { role: 'user' | 'model', parts: { text: string }[] }[] = [], lang: string = 'ko') {
+    // Always use the named parameter for API key initialization
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+    
     let systemInstruction = '';
     
     switch(lang) {
@@ -26,7 +29,8 @@ export class GeminiService {
     }
 
     try {
-      const response = await this.ai.models.generateContent({
+      // Use ai.models.generateContent with the model name and prompt/history
+      const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: [
             ...history,
@@ -38,6 +42,7 @@ export class GeminiService {
         }
       });
 
+      // Directly access .text property as per SDK guidelines (not a method)
       return response.text || "Sorry, I couldn't process your request.";
     } catch (error) {
       console.error("Gemini Error:", error);

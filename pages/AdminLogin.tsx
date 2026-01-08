@@ -20,7 +20,7 @@ const AdminLogin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-background-dark px-6">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-background-dark px-6 pt-24">
       <div className="max-w-md w-full bg-white dark:bg-surface-dark p-10 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800">
         <div className="flex flex-col items-center mb-10">
           <div className="size-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-4">

@@ -1,4 +1,5 @@
 
+// Add React import to resolve namespace errors for React.FC, React.FormEvent, etc.
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -15,6 +16,7 @@ type Tab = 'solutions' | 'technology' | 'partnership' | 'contact' | 'inquiries';
 const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<Tab>('solutions');
+  const [showSource, setShowSource] = useState(false);
 
   // Solutions State
   const [services, setServices] = useState<Service[]>([]);
@@ -50,65 +52,6 @@ const AdminDashboard: React.FC = () => {
     navigate('/admin/login');
   };
 
-  // Solutions Handlers
-  const handleSaveService = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editingService) return;
-    let updated;
-    const exists = services.find(s => s.id === editingService.id);
-    if (exists) {
-      updated = services.map(s => s.id === editingService.id ? editingService : s);
-    } else {
-      updated = [...services, editingService];
-    }
-    setServices(updated);
-    saveServices(updated);
-    setEditingService(null);
-  };
-
-  const deleteService = (id: string) => {
-    if (!confirm('솔루션을 삭제하시겠습니까?')) return;
-    const updated = services.filter(s => s.id !== id);
-    setServices(updated);
-    saveServices(updated);
-  };
-
-  // Tech Handlers
-  const handleSaveTech = (e: React.FormEvent) => {
-    e.preventDefault();
-    saveTechContent(techContent);
-    alert('기술력 정보가 저장되었습니다.');
-  };
-
-  // Partner Handlers
-  const handleSavePartner = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editingPartner) return;
-    let updated;
-    if (partners.find(p => p.id === editingPartner.id)) {
-      updated = partners.map(p => p.id === editingPartner.id ? editingPartner : p);
-    } else {
-      updated = [...partners, editingPartner];
-    }
-    setPartners(updated);
-    savePartners(updated);
-    setEditingPartner(null);
-  };
-
-  const deletePartner = (id: string) => {
-    if (!confirm('파트너를 삭제하시겠습니까?')) return;
-    const updated = partners.filter(p => p.id !== id);
-    setPartners(updated);
-    savePartners(updated);
-  };
-
-  // Contact Handlers
-  const handleSaveContact = (e: React.FormEvent) => {
-    e.preventDefault();
-    saveContactContent(contactContent);
-    alert('문의하기 정보가 저장되었습니다.');
-  };
-
   // Inquiry Handlers
   const deleteInquiry = (id: string) => {
     if (!confirm('문의 내역을 삭제하시겠습니까?')) return;
@@ -118,10 +61,15 @@ const AdminDashboard: React.FC = () => {
     if (viewingInquiry?.id === id) setViewingInquiry(null);
   };
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    alert('소스 코드가 클립보드에 복사되었습니다.');
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-background-dark flex">
+    <div className="min-h-screen bg-slate-50 dark:bg-background-dark flex pt-24 lg:pt-28">
       {/* Sidebar */}
-      <aside className="w-64 bg-white dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800 flex flex-col">
+      <aside className="w-64 bg-white dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800 flex flex-col sticky top-24 h-[calc(100vh-6rem)]">
         <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2">
             <span className="material-symbols-outlined text-primary font-bold">admin_panel_settings</span>
             <span className="font-black text-slate-900 dark:text-white uppercase tracking-tighter">MKS Admin</span>
@@ -157,7 +105,7 @@ const AdminDashboard: React.FC = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 lg:p-12 overflow-y-auto h-screen no-scrollbar">
+      <main className="flex-1 p-8 lg:p-12 overflow-y-auto no-scrollbar">
         <header className="mb-10 flex justify-between items-end">
           <div>
             <h1 className="text-3xl font-black dark:text-white capitalize">{activeTab} Management</h1>
@@ -168,275 +116,114 @@ const AdminDashboard: React.FC = () => {
           </div>
         </header>
 
-        {/* SOLUTIONS TAB */}
-        {activeTab === 'solutions' && (
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-            <div className="space-y-4">
-              <div className="flex justify-between items-center mb-6">
-                 <h2 className="text-xl font-bold dark:text-white">등록된 솔루션 리스트</h2>
-                 <button 
-                  onClick={() => setEditingService({ id: '', name: '', title: '', description: '', longDescription: '', icon: 'star', imageUrl: '', category: '', features: [] })}
-                  className="px-4 py-2 bg-primary/10 text-primary text-xs font-black rounded-lg hover:bg-primary hover:text-white transition-all"
-                 >
-                   신규 솔루션 추가
-                 </button>
-              </div>
-              {services.map(s => (
-                <div key={s.id} className="bg-white dark:bg-surface-dark p-5 rounded-2xl border border-slate-100 dark:border-slate-800 flex justify-between items-center group shadow-sm">
-                  <div className="flex items-center gap-4">
-                    <div className="size-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
-                      <span className="material-symbols-outlined">{s.icon}</span>
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-sm dark:text-white">{s.name}</h3>
-                      <p className="text-[10px] text-slate-400 uppercase font-black">{s.id} • {s.category}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <button onClick={() => setEditingService(s)} className="size-8 rounded-full flex items-center justify-center text-slate-400 hover:text-primary hover:bg-primary/10 transition-all"><span className="material-symbols-outlined text-sm">edit</span></button>
-                    <button onClick={() => deleteService(s.id)} className="size-8 rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all"><span className="material-symbols-outlined text-sm">delete</span></button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {editingService && (
-              <div className="bg-white dark:bg-surface-dark p-8 rounded-3xl border border-primary/20 shadow-xl animate-in fade-in slide-in-from-right-10">
-                <h3 className="text-lg font-bold mb-6 dark:text-white">솔루션 정보 편집</h3>
-                <form onSubmit={handleSaveService} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <input required placeholder="ID (영어)" value={editingService.id} onChange={e => setEditingService({...editingService, id: e.target.value})} className="bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-3 dark:text-white" />
-                    <input required placeholder="이름" value={editingService.name} onChange={e => setEditingService({...editingService, name: e.target.value})} className="bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-3 dark:text-white" />
-                  </div>
-                  <input required placeholder="핵심 타이틀" value={editingService.title} onChange={e => setEditingService({...editingService, title: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-3 dark:text-white" />
-                  <textarea required placeholder="설명" rows={3} value={editingService.description} onChange={e => setEditingService({...editingService, description: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-3 dark:text-white resize-none" />
-                  <div className="grid grid-cols-2 gap-4">
-                    <input required placeholder="카테고리" value={editingService.category} onChange={e => setEditingService({...editingService, category: e.target.value})} className="bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-3 dark:text-white" />
-                    <input required placeholder="아이콘" value={editingService.icon} onChange={e => setEditingService({...editingService, icon: e.target.value})} className="bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-3 dark:text-white" />
-                  </div>
-                  <div className="flex gap-2">
-                    <button type="submit" className="flex-1 h-12 bg-primary text-white font-bold rounded-xl shadow-lg">저장하기</button>
-                    <button type="button" onClick={() => setEditingService(null)} className="px-6 h-12 border border-slate-200 dark:border-slate-700 dark:text-white rounded-xl">취소</button>
-                  </div>
-                </form>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* TECHNOLOGY TAB */}
-        {activeTab === 'technology' && (
-          <div className="max-w-3xl">
-            <div className="bg-white dark:bg-surface-dark p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
-              <h2 className="text-xl font-bold mb-8 dark:text-white">기술력 페이지 텍스트 편집</h2>
-              <form onSubmit={handleSaveTech} className="space-y-6">
-                <div>
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Hero 타이틀</label>
-                  <input required value={techContent.heroTitle} onChange={e => setTechContent({...techContent, heroTitle: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white font-bold" />
-                </div>
-                <div>
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Hero 설명</label>
-                  <input required value={techContent.heroDescription} onChange={e => setTechContent({...techContent, heroDescription: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white" />
-                </div>
-                <div className="pt-4 border-t border-slate-50 dark:border-slate-800">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">섹션 타이틀</label>
-                  <input required value={techContent.sectionTitle} onChange={e => setTechContent({...techContent, sectionTitle: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white font-bold" />
-                </div>
-                <div>
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">섹션 설명</label>
-                  <textarea required rows={4} value={techContent.sectionDescription} onChange={e => setTechContent({...techContent, sectionDescription: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white resize-none" />
-                </div>
-                <div className="pt-4 border-t border-slate-50 dark:border-slate-800">
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">AI 인공지능 기술 설명</label>
-                  <textarea required rows={4} value={techContent.aiDescription} onChange={e => setTechContent({...techContent, aiDescription: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white resize-none" />
-                </div>
-                <div>
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">블록체인 기술 설명</label>
-                  <textarea required rows={4} value={techContent.blockchainDescription} onChange={e => setTechContent({...techContent, blockchainDescription: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white resize-none" />
-                </div>
-                <button type="submit" className="h-14 w-full bg-primary text-white font-black rounded-xl shadow-xl shadow-primary/20 hover:scale-[1.01] transition-all">기술력 정보 저장</button>
-              </form>
-            </div>
-          </div>
-        )}
-
-        {/* PARTNERSHIP TAB */}
-        {activeTab === 'partnership' && (
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-            <div className="space-y-4">
-              <div className="flex justify-between items-center mb-6">
-                 <h2 className="text-xl font-bold dark:text-white">글로벌 파트너 리스트</h2>
-                 <button 
-                  onClick={() => setEditingPartner({ id: String(Date.now()), name: '', type: 'Business', description: '', scope: '', imageUrl: '', status: '활성' })}
-                  className="px-4 py-2 bg-primary/10 text-primary text-xs font-black rounded-lg hover:bg-primary hover:text-white transition-all"
-                 >
-                   신규 파트너 추가
-                 </button>
-              </div>
-              {partners.map(p => (
-                <div key={p.id} className="bg-white dark:bg-surface-dark p-5 rounded-2xl border border-slate-100 dark:border-slate-800 flex justify-between items-center group shadow-sm">
-                  <div className="flex items-center gap-4">
-                    <div className="size-12 bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden shrink-0">
-                      <img src={p.imageUrl || 'https://picsum.photos/seed/partner/100/100'} alt="" className="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-sm dark:text-white">{p.name}</h3>
-                      <p className="text-[10px] text-slate-400 uppercase font-black">{p.type} • {p.status}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <button onClick={() => setEditingPartner(p)} className="size-8 rounded-full flex items-center justify-center text-slate-400 hover:text-primary hover:bg-primary/10 transition-all"><span className="material-symbols-outlined text-sm">edit</span></button>
-                    <button onClick={() => deletePartner(p.id)} className="size-8 rounded-full flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all"><span className="material-symbols-outlined text-sm">delete</span></button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {editingPartner && (
-              <div className="bg-white dark:bg-surface-dark p-8 rounded-3xl border border-primary/20 shadow-xl animate-in fade-in slide-in-from-right-10">
-                <h3 className="text-lg font-bold mb-6 dark:text-white">파트너 정보 편집</h3>
-                <form onSubmit={handleSavePartner} className="space-y-4">
-                  <input required placeholder="파트너사 명칭" value={editingPartner.name} onChange={e => setEditingPartner({...editingPartner, name: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-3 dark:text-white" />
-                  <select value={editingPartner.type} onChange={e => setEditingPartner({...editingPartner, type: e.target.value as any})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-3 dark:text-white">
-                    <option value="Institution">의료 기관 (Institution)</option>
-                    <option value="Business">일반 기업 (Business)</option>
-                  </select>
-                  <textarea required placeholder="설명" rows={3} value={editingPartner.description} onChange={e => setEditingPartner({...editingPartner, description: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-3 dark:text-white resize-none" />
-                  <input required placeholder="협력 범위" value={editingPartner.scope} onChange={e => setEditingPartner({...editingPartner, scope: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-3 dark:text-white" />
-                  <input placeholder="이미지 URL" value={editingPartner.imageUrl} onChange={e => setEditingPartner({...editingPartner, imageUrl: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-3 dark:text-white" />
-                  <div className="flex gap-2">
-                    <button type="submit" className="flex-1 h-12 bg-primary text-white font-bold rounded-xl shadow-lg">파트너 저장</button>
-                    <button type="button" onClick={() => setEditingPartner(null)} className="px-6 h-12 border border-slate-200 dark:border-slate-700 dark:text-white rounded-xl">취소</button>
-                  </div>
-                </form>
-              </div>
-            )}
-          </div>
-        )}
-
-        {activeTab === 'contact' && (
-          <div className="max-w-3xl">
-            <div className="bg-white dark:bg-surface-dark p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
-              <h2 className="text-xl font-bold mb-8 dark:text-white">문의하기 페이지 정보 편집</h2>
-              <form onSubmit={handleSaveContact} className="space-y-6">
-                <div>
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Hero 타이틀</label>
-                  <input required value={contactContent.heroTitle} onChange={e => setContactContent({...contactContent, heroTitle: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white font-bold" />
-                </div>
-                <div>
-                  <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">Hero 설명</label>
-                  <textarea required rows={3} value={contactContent.heroDescription} onChange={e => setContactContent({...contactContent, heroDescription: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white resize-none" />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-50 dark:border-slate-800">
-                  <div>
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">공식 이메일</label>
-                    <input required value={contactContent.email} onChange={e => setContactContent({...contactContent, email: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white" />
-                  </div>
-                  <div>
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">이메일 설명</label>
-                    <input required value={contactContent.emailDescription} onChange={e => setContactContent({...contactContent, emailDescription: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white" />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">주소 타이틀 (예: 본사)</label>
-                    <input required value={contactContent.addressTitle} onChange={e => setContactContent({...contactContent, addressTitle: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white" />
-                  </div>
-                  <div>
-                    <label className="text-xs font-black text-slate-400 uppercase tracking-widest block mb-2">상세 주소</label>
-                    <input required value={contactContent.address} onChange={e => setContactContent({...contactContent, address: e.target.value})} className="w-full bg-slate-50 dark:bg-slate-900 border-none rounded-xl text-sm p-4 dark:text-white" />
-                  </div>
-                </div>
-                <button type="submit" className="h-14 w-full bg-primary text-white font-black rounded-xl shadow-xl shadow-primary/20 hover:scale-[1.01] transition-all">문의 정보 저장</button>
-              </form>
-            </div>
-          </div>
-        )}
-
-        {/* INQUIRIES TAB */}
         {activeTab === 'inquiries' && (
-          <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
-            <div className="xl:col-span-5 space-y-4">
-              <h2 className="text-xl font-bold dark:text-white mb-6">접수된 문의 내역 ({inquiries.length})</h2>
-              {inquiries.length === 0 ? (
-                <div className="p-10 text-center bg-white dark:bg-surface-dark rounded-3xl border border-dashed border-slate-200 dark:border-slate-700">
-                  <p className="text-slate-400">접수된 문의가 없습니다.</p>
+          <div className="space-y-6">
+            <h2 className="text-xl font-bold dark:text-white">접수된 문의 내역 ({inquiries.length})</h2>
+            
+            {inquiries.length === 0 ? (
+              <div className="p-20 text-center bg-white dark:bg-surface-dark rounded-3xl border border-dashed border-slate-200 dark:border-slate-700">
+                <span className="material-symbols-outlined text-6xl text-slate-200 mb-4">mail_outline</span>
+                <p className="text-slate-400 font-medium">접수된 문의가 아직 없습니다.</p>
+              </div>
+            ) : (
+              <div className="bg-white dark:bg-surface-dark rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden">
+                <div className="overflow-x-auto no-scrollbar">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800">
+                        <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap">문의일자</th>
+                        <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap">성함/담당자</th>
+                        <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap">이메일</th>
+                        <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap">문의제목</th>
+                        <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400 whitespace-nowrap">문의내용</th>
+                        <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-slate-400 text-center whitespace-nowrap">관리</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
+                      {inquiries.map(inq => (
+                        <tr 
+                          key={inq.id} 
+                          onClick={() => { setViewingInquiry(inq); setShowSource(false); }}
+                          className={`hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors cursor-pointer group ${viewingInquiry?.id === inq.id ? 'bg-primary/5' : ''}`}
+                        >
+                          <td className="px-6 py-4 text-xs font-medium text-slate-500 whitespace-nowrap">{inq.date}</td>
+                          <td className="px-6 py-4 text-xs font-bold text-primary dark:text-white whitespace-nowrap">{inq.name}</td>
+                          <td className="px-6 py-4 text-xs text-slate-500 truncate max-w-[150px] whitespace-nowrap">{inq.email}</td>
+                          <td className="px-6 py-4 text-xs font-bold text-primary dark:text-white truncate max-w-[200px] whitespace-nowrap">{inq.subject}</td>
+                          <td className="px-6 py-4 text-xs text-slate-400 truncate max-w-[300px] whitespace-nowrap">{inq.content}</td>
+                          <td className="px-6 py-4 text-center whitespace-nowrap">
+                            <button 
+                              onClick={(e) => { e.stopPropagation(); deleteInquiry(inq.id); }}
+                              className="size-8 rounded-full flex items-center justify-center text-slate-300 hover:text-red-500 hover:bg-red-50 transition-all"
+                            >
+                              <span className="material-symbols-outlined text-[18px]">delete</span>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-              ) : (
-                <div className="space-y-3">
-                  {inquiries.map(inq => (
-                    <div 
-                      key={inq.id} 
-                      onClick={() => setViewingInquiry(inq)}
-                      className={`p-5 rounded-2xl border transition-all cursor-pointer group flex justify-between items-center ${
-                        viewingInquiry?.id === inq.id 
-                        ? 'bg-primary/5 border-primary/30 shadow-md' 
-                        : 'bg-white dark:bg-surface-dark border-slate-100 dark:border-slate-800 hover:border-primary/20 shadow-sm'
-                      }`}
-                    >
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-bold text-sm dark:text-white truncate">{inq.name}</span>
-                          <span className="text-[10px] text-slate-400 font-medium shrink-0">{inq.date}</span>
-                        </div>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 truncate font-body">{inq.subject}</p>
-                      </div>
-                      <button 
-                        onClick={(e) => { e.stopPropagation(); deleteInquiry(inq.id); }}
-                        className="size-8 rounded-full flex items-center justify-center text-slate-300 hover:text-red-500 hover:bg-red-50 transition-all opacity-0 group-hover:opacity-100"
-                      >
-                        <span className="material-symbols-outlined text-[18px]">delete</span>
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+              </div>
+            )}
 
-            <div className="xl:col-span-7">
-              {viewingInquiry ? (
-                <div className="bg-white dark:bg-surface-dark p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-xl animate-in fade-in slide-in-from-right-5 sticky top-8">
-                  <div className="flex justify-between items-start mb-8">
-                    <div>
-                      <span className="text-[10px] font-black uppercase text-primary tracking-widest mb-1 block">Inquiry Detail</span>
-                      <h3 className="text-2xl font-bold dark:text-white">{viewingInquiry.subject}</h3>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm font-bold dark:text-white">{viewingInquiry.name}</p>
-                      <p className="text-xs text-slate-400">{viewingInquiry.email}</p>
-                    </div>
+            {viewingInquiry && (
+              <div className="bg-white dark:bg-surface-dark p-8 rounded-3xl border border-primary/20 shadow-xl animate-fade-up">
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <span className="text-[10px] font-black uppercase text-primary tracking-widest mb-1 block">Inquiry Management Console</span>
+                    <h3 className="text-2xl font-bold dark:text-white">{viewingInquiry.subject}</h3>
+                    <p className="text-xs text-slate-400 mt-1">{viewingInquiry.date} | {viewingInquiry.name} ({viewingInquiry.email})</p>
                   </div>
-                  
-                  <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 mb-8">
-                    <p className="text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed font-body">
-                      {viewingInquiry.content}
-                    </p>
-                  </div>
-                  
-                  <div className="flex gap-4">
-                    <a 
-                      href={`mailto:${viewingInquiry.email}?subject=Re: ${viewingInquiry.subject}`}
-                      className="flex-1 h-14 bg-primary text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all"
-                    >
-                      <span className="material-symbols-outlined text-xl">reply</span> 답장 메일 쓰기
-                    </a>
+                  <div className="flex gap-2">
                     <button 
-                      onClick={() => deleteInquiry(viewingInquiry.id)}
-                      className="px-8 h-14 border border-red-200 text-red-500 font-bold rounded-xl hover:bg-red-50 transition-all"
+                      onClick={() => setShowSource(!showSource)}
+                      className={`px-4 py-2 rounded-lg text-xs font-black transition-all ${showSource ? 'bg-primary text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
                     >
-                      삭제
+                      {showSource ? '상세 내용 보기' : 'TS 소스 코드 보기'}
+                    </button>
+                    <button onClick={() => setViewingInquiry(null)} className="size-10 rounded-full hover:bg-slate-100 flex items-center justify-center transition-all">
+                      <span className="material-symbols-outlined">close</span>
                     </button>
                   </div>
                 </div>
-              ) : (
-                <div className="h-full flex items-center justify-center border-2 border-dashed border-slate-100 dark:border-slate-800 rounded-3xl p-20">
-                  <div className="text-center">
-                    <span className="material-symbols-outlined text-6xl text-slate-200 dark:text-slate-700 mb-4">mail_outline</span>
-                    <p className="text-slate-400">좌측 리스트에서 상세 내용을 확인할 문의를 선택하세요.</p>
+
+                {showSource ? (
+                  <div className="relative group">
+                    <pre className="bg-slate-900 text-slate-300 p-6 rounded-2xl text-xs font-mono overflow-x-auto border border-slate-800 leading-relaxed max-h-[400px]">
+                      {viewingInquiry.tsCode || '// No source code available for this entry.'}
+                    </pre>
+                    <button 
+                      onClick={() => copyToClipboard(viewingInquiry.tsCode || '')}
+                      className="absolute top-4 right-4 px-3 py-1.5 bg-white/10 text-white text-[10px] font-bold rounded-md hover:bg-white/20 transition-all"
+                    >
+                      Copy TS Code
+                    </button>
                   </div>
+                ) : (
+                  <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 mb-8 max-h-[300px] overflow-y-auto">
+                    <p className="text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed font-body text-sm">
+                      {viewingInquiry.content}
+                    </p>
+                  </div>
+                )}
+                
+                <div className="flex gap-4 mt-8">
+                  <a 
+                    href={`mailto:${viewingInquiry.email}?subject=Re: ${viewingInquiry.subject}`}
+                    className="flex-1 h-14 bg-primary text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary-dark transition-all"
+                  >
+                    <span className="material-symbols-outlined text-xl">reply</span> 답장 메일 쓰기
+                  </a>
+                  <button 
+                    onClick={() => { deleteInquiry(viewingInquiry.id); }}
+                    className="px-8 h-14 border border-red-200 text-red-500 font-bold rounded-xl hover:bg-red-50 transition-all"
+                  >
+                    삭제
+                  </button>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         )}
       </main>
