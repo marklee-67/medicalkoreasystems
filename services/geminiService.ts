@@ -4,13 +4,12 @@ import { GoogleGenAI } from "@google/genai";
 export class GeminiService {
   /**
    * Sends a message to the Gemini AI and returns the response text.
-   * Following SDK rules:
-   * - Initialize GoogleGenAI within the call to ensure fresh API key usage.
-   * - Access the .text property of the response directly.
    */
   async chat(message: string, history: { role: 'user' | 'model', parts: { text: string }[] }[] = [], lang: string = 'ko') {
-    // Always use the named parameter for API key initialization
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+    // API_KEY is provided via process.env which is defined in vite.config.ts
+    const apiKey = process.env.API_KEY || '';
+    // Correct initialization with named parameter
+    const ai = new GoogleGenAI({ apiKey });
     
     let systemInstruction = '';
     
@@ -29,7 +28,7 @@ export class GeminiService {
     }
 
     try {
-      // Use ai.models.generateContent with the model name and prompt/history
+      // Direct call to generateContent as per guidelines
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: [
@@ -42,7 +41,7 @@ export class GeminiService {
         }
       });
 
-      // Directly access .text property as per SDK guidelines (not a method)
+      // Use .text property (not a method)
       return response.text || "Sorry, I couldn't process your request.";
     } catch (error) {
       console.error("Gemini Error:", error);
