@@ -3,32 +3,34 @@ import { GoogleGenAI } from "@google/genai";
 
 export class GeminiService {
   /**
-   * Sends a message to the Gemini AI and returns the response text.
+   * Medical Korea Systems AI Support Agent
+   * Implementation using @google/genai SDK best practices
    */
-  async chat(message: string, history: { role: 'user' | 'model', parts: { text: string }[] }[] = [], lang: string = 'ko') {
-    // API_KEY is provided via process.env which is defined in vite.config.ts
+  async chat(message: string, history: any[] = [], lang: string = 'ko') {
+    // API_KEY is provided via process.env during build and runtime
     const apiKey = process.env.API_KEY || '';
-    // Correct initialization with named parameter
+    
+    // Initializing with named parameter as required by the latest SDK
     const ai = new GoogleGenAI({ apiKey });
     
     let systemInstruction = '';
     
     switch(lang) {
       case 'ko':
-        systemInstruction = '당신은 Medical Korea Systems (MKS)의 친절한 고객 지원 AI 상담원입니다. 사용자가 Q-health, NutriCheck, HELIOS™와 같은 건강 솔루션을 이해하도록 도와주세요. 전문적이고 따뜻하며 신뢰감 있는 한국어로 답변하세요.';
+        systemInstruction = '당신은 Medical Korea Systems (MKS)의 전문적인 AI 상담원입니다. 사용자가 Q-health, NutriCheck, HELIOS™와 같은 고급 의료 솔루션을 이해하도록 도와주세요. 친절하고 신뢰감 있는 톤을 유지하세요.';
         break;
       case 'lo':
-        systemInstruction = 'ທ່ານແມ່ນ AI ຊ່ວຍເຫຼືອລູກຄ້າຂອງ Medical Korea Systems (MKS). ກະລຸນາຕອບເປັນພາສາລາວຢ່າງສຸພາບ ແລະ ເປັນມືອາຊີບ ກ່ຽວກັບບໍລິການທາງການແພດຂອງພວກເຮົາ.';
+        systemInstruction = 'ທ່ານແມ່ນ AI ຊ່ວຍເຫຼືອລູກຄ້າຂອງ Medical Korea Systems (MKS). ກະລຸນາຕອບເປັນພາສາລາວຢ່າງສຸພາບ ແລະ ເປັນມືອາຊີບ.';
         break;
       case 'si':
-        systemInstruction = 'ඔබ Medical Korea Systems (MKS) හි පාරිභෝගික සහාය AI සහායකයා වේ. කරුණාකර අපගේ සෞඛ්‍ය විසඳුම් පිළිබඳව සිංහල භාෂාවෙන් ඉතා සුහදශීලීව සහ වෘත්තීයමය ලෙස පිළිතුරු දෙන්න.';
+        systemInstruction = 'ඔබ Medical Korea Systems (MKS) හි පාරිභෝගික සහාය AI සහායකයා වේ. කරුණාකර අපගේ සෞඛ්‍ය විසඳුම් පිළිබඳව සිංහල භාෂාවෙන් පිළිතුරු දෙන්න.';
         break;
       default:
-        systemInstruction = 'You are a friendly customer support AI agent for Medical Korea Systems (MKS). Help users understand health solutions like Q-health, NutriCheck, and HELIOS™. Respond in professional, warm, and trustworthy English.';
+        systemInstruction = 'You are a professional AI agent for Medical Korea Systems (MKS). Help users navigate our health solutions like Q-health and NutriCheck with a warm, expert tone.';
     }
 
     try {
-      // Direct call to generateContent as per guidelines
+      // Corrected API usage: calling generateContent directly on ai.models
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: [
@@ -41,11 +43,12 @@ export class GeminiService {
         }
       });
 
-      // Use .text property (not a method)
-      return response.text || "Sorry, I couldn't process your request.";
+      // Corrected extraction: .text is a property, not a method
+      const outputText = response.text;
+      return outputText || "I'm sorry, I couldn't generate a response at this moment.";
     } catch (error) {
-      console.error("Gemini Error:", error);
-      return "Hello! Our system is currently under maintenance. Please try again later.";
+      console.error("Gemini API Error:", error);
+      return "The AI service is currently initializing. Please try again in a few seconds.";
     }
   }
 }
